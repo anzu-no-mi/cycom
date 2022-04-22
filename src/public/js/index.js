@@ -14,8 +14,9 @@ const images = ["images/img1.jpg", "images/img2.jpg"];
 let current = 0;
 
 // 通常時の遷移、最も右→最も左、最も右→最も左
-ChangeScrean = (num) => {
-const img = document.getElementById('screan-img');
+  ChangeScrean = (num) => {
+  
+  const img = document.getElementById('screan-img');
 
   if(current + num >= 0 && current + num <= images.length - 1) {
     current += num;
@@ -29,6 +30,6 @@ const img = document.getElementById('screan-img');
   }
 }
 
-//イベントと関数がバインドされているかチェック用
+//イベントと関数がバインドされているかチェック用、後で消す
 test = () => console.log(document.getElementById('screan-img').getAttribute('src'))
 
