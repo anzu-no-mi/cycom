@@ -8,10 +8,12 @@ function addContent() {
   elm.appendChild(newElm);
 }
 
+// お知らせ用の写真
 const images = ["images/img1.jpg", "images/img2.jpg"];
+// 写真、何枚目か
 let current = 0;
 
-
+// 通常時の遷移、最も右→最も左、最も右→最も左
 ChangeScrean = (num) => {
 const img = document.getElementById('screan-img');
 
@@ -27,5 +29,6 @@ const img = document.getElementById('screan-img');
   }
 }
 
+//イベントと関数がバインドされているかチェック用
 test = () => console.log(document.getElementById('screan-img').getAttribute('src'))
 
