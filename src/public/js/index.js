@@ -1,33 +1,33 @@
 
-function addContent() {
-  const elm = document.getElementById("content");
-
-  const newElm = document.createElement("p");
-  newElm.innerHTML = "new element."
-
-  elm.appendChild(newElm);
-}
 
 // お知らせ用の写真
 const images = ["images/img1.jpg", "images/img2.jpg"];
-// 写真、何枚目か
+
+// 写真、何枚目か　カウンターでも使用するのでグローバルにしている。Q:globalなままでいいか？
 let current = 0;
 
-// 通常時の遷移、最も右→最も左、最も右→最も左
-  ChangeScrean = (num) => {
+const  changeScrean = (num) => {
   
   const img = document.getElementById('screan-img');
 
+  // 通常時の遷移 (num＝1～N Nはお知らせの数)
   if(current + num >= 0 && current + num <= images.length - 1) {
     current += num;
-    img.setAttribute('src', images[current]);
+
+  // 最も右→最も左
   }else if(current + num == -1) {
     current = images.length - 1;
-    img.setAttribute('src', images[current]);
+    
+  // 最も右→最も左
   }else {
     current = 0;
-    img.setAttribute('src', images[current])
   }
+  img.setAttribute('src', images[current]);
+}
+
+const imgCounter = ()=>{
+  const elm =document.getElementById()
+  elm.className = ''
 }
 
 //イベントと関数がバインドされているかチェック用、後で消す
