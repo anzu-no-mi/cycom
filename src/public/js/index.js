@@ -17,7 +17,7 @@ const  changeScrean = (num) => {
   // 最も右→最も左
   }else if(current + num == -1) {
     current = images.length - 1;
-    
+
   // 最も右→最も左
   }else {
     current = 0;
@@ -25,9 +25,10 @@ const  changeScrean = (num) => {
   img.setAttribute('src', images[current]);
 }
 
+どのようにN個に対応させるか
 const imgCounter = ()=>{
-  const elm =document.getElementById()
-  elm.className = ''
+  const elm =document.getElementById("counter-" + current);
+  elm.className = 'bg-primary';
 }
 
 //イベントと関数がバインドされているかチェック用、後で消す
