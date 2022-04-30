@@ -15,15 +15,15 @@
 
     <title>Hello, world!</title>
   </head>
-  <body>
+  <body onload="testScreen.generateCounter()">
   <!-- 　松尾担当部分 -->
-    <div class="container " id="upper">
+    <div class="container" >
 
       <!-- 全体 -->
-      <div class="row w-100">
+      <div class="row w-100" id="upper">
 
         <!-- 左側 -->
-        <div class="col-4 container  g-4 mx-">
+        <div class="col-4 container  g-4 ">
 
           <!-- log -->
           <div class="p-3">
@@ -52,9 +52,9 @@
           <!-- info -->
           <div class=""  id="information-board">
             <div class="row p-4" id="screan-and-btn">
-              <button class="col-2 g-0 btn bg-primary border" id="left-btn" onclick="changeScrean(-1)"><i class="bi bi-arrow-left-square-fill"></i></button>
+              <button class="col-2 g-0 btn bg-primary border" id="left-btn" onclick="testScreen.changeScrean(-1)"><i class="bi bi-arrow-left-square-fill"></i></button>
               <div class="col g-0" id="main-screan"><img class="img-fluid " id="screan-img" src="images/img1.jpg" /></div>
-              <button class="col-2 g-0 btn border bg-primary" id="right-btn" onclick="changeScrean(1)"><i class="bi bi-arrow-right-square-fill"></i></button>
+              <button class="col-2 g-0 btn border bg-primary" id="right-btn" onclick="testScreen.changeScrean(1)"><i class="bi bi-arrow-right-square-fill"></i></button>
             </div>
 
             <!-- detail -->
@@ -63,9 +63,7 @@
             <!-- 考え中 -->
             <!-- counter -->
             <div class="row border container" id="img-counter">
-              <div class="col  border rounded-pill bg-primary"><i class="bi bi-dice-1"></i></div>
-              <div class="col rounded-pill "><i class="bi bi-dice-2"></i></div> 
-              <div class="col rounded-pill "><i class="bi bi-dice-3"></i></div>  
+              
             </div>
           </div>
         </div>
