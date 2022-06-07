@@ -1,10 +1,8 @@
-.information-board {
-  border: 1px solid black;
-}
 
 .swiper {
   width: 100%;
   height: 100%;
+  border: 1px solid black;
 }
 
 .swiper-slide {
@@ -32,4 +30,79 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+body {
+  margin: 50px;
+  display: grid;
+  grid-template: 
+  "logo title title" 30%
+  "logo info info" 30%
+  "sns info info" 20%
+  "constr info info" 20%
+  / 1fr 1fr 1fr;
+  height: 100vh;
+}
+
+.logo {
+  grid-area: logo;
+  margin: auto 0;
+  border: black solid 2px;
+}
+
+.logo img {
+  height: 300px;
+  width:  100%;
+}
+
+.sns {
+  grid-area: sns;
+  display: flex;
+}
+
+.sns a {
+  margin: 0 5px;
+  box-sizing: border-box;
+  
+
+}
+
+.sns img {
+  height: 100px;
+}
+
+.constr {
+  margin: 0 auto;
+  display: block;
+  grid-area: constr;
+  
+}
+
+.title {
+  display: block;
+  grid-area: title;
+  margin: auto;
+  border: black solid 2px;
+  width: 90%;
+  text-align: center;
+  
+}
+
+.title h1 {
+  font-size: 70px;
+}
+
+.info {
+  grid-area: info;
+  margin: 20px;
+}
+
+img {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+h1 {
+  display: block;
 }
