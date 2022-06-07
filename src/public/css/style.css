@@ -33,7 +33,7 @@
 }
 
 body {
-  margin: 50px;
+  margin: 0 50px;
   display: grid;
   grid-template: 
   "logo title title" 30%
