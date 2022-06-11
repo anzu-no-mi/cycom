@@ -36,10 +36,10 @@ body {
   margin: 0 50px;
   display: grid;
   grid-template: 
-  "logo title title" 30%
-  "logo info info" 30%
-  "sns info info" 20%
-  "constr info info" 20%
+  "logo title title" 1.5fr
+  "logo info info" 1.5fr
+  "sns info info" 1fr
+  "constr info info" 1fr
   / 1fr 1fr 1fr;
   height: 100vh;
 }
