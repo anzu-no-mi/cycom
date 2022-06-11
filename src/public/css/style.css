@@ -1,16 +1,108 @@
-h1 {
-  color: blue;
-  margin-left: 20px;
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  border: 1px solid black;
 }
 
-button {
-  background-color: #04AA6D;
-  border: none;
-  color: white;
-  padding: 20px;
+.swiper-slide {
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+body {
+  margin: 0 50px;
+  display: grid;
+  grid-template: 
+  "logo title title" 1.5fr
+  "logo info info" 1.5fr
+  "sns info info" 1fr
+  "constr info info" 1fr
+  / 1fr 1fr 1fr;
+  height: 100vh;
+}
+
+.logo {
+  grid-area: logo;
+  margin: auto 0;
+  border: black solid 2px;
+}
+
+.logo img {
+  height: 300px;
+  width:  100%;
+}
+
+.sns {
+  grid-area: sns;
+  display: flex;
+}
+
+.sns a {
+  margin: 0 5px;
+  box-sizing: border-box;
+  
+
+}
+
+.sns img {
+  height: 100px;
+}
+
+.constr {
+  margin: 0 auto;
+  display: block;
+  grid-area: constr;
+  
+}
+
+.title {
+  display: block;
+  grid-area: title;
+  margin: auto;
+  border: black solid 2px;
+  width: 90%;
+  text-align: center;
+  
+}
+
+.title h1 {
+  font-size: 70px;
+}
+
+.info {
+  grid-area: info;
+  margin: 20px;
+}
+
+img {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+h1 {
+  display: block;
 }
