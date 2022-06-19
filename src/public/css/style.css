@@ -1,5 +1,5 @@
 .swiper {
-  width: 100%;
+  width: 60vw;
   height: 100%;
   border: 1px solid black;
 }
@@ -35,7 +35,11 @@
   margin: 0 50px;
   display: grid;
   grid-template:
-    "logo title title"1.5fr "logo info info"1.5fr "sns info info"1fr "constr info info"1fr / 1fr 1fr 1fr;
+    "logo   title title"1.5fr
+    "logo   info  info"1.5fr 
+    "sns    info  info"1fr 
+    "constr info  info"1fr 
+    / 30vw 30vw 30vw;
   height: 100vh;
 }
 
@@ -50,11 +54,14 @@
 .logo img {
   /* height: 300px; */
   width: 30vw;
+  height: 50vh;
 }
 
 .sns {
   grid-area: sns;
   display: flex;
+  width: 30vw;
+  height: 25vh;
 }
 
 .sns a {
@@ -72,6 +79,7 @@
   margin: 0 auto;
   display: block;
   grid-area: constr;
+  overflow: hidden;
 
 }
 
@@ -79,9 +87,11 @@
   display: block;
   grid-area: title;
   margin: auto;
-  border: black solid 2px;
-  width: 90%;
+  /* border: black solid 2px; */
+  width: 60vw;
   text-align: center;
+  height: 10vh;
+  overflow: hidden;
 
 }
 
@@ -103,5 +113,3 @@ img {
 h1 {
   display: block;
 }
-
-/* テスト */
