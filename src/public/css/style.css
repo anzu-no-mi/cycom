@@ -80,15 +80,19 @@ body {
 .title {
   display: block;
   grid-area: title;
-  margin: 3vw 5vw 2vw 5vw;
+  margin: 5vw 5vw 2vw 5vw;
   /* border: black solid 2px; */
   width: 60vw;
   text-align: center;
   height: 10vw;
   overflow: hidden;
+  /* border: 1px solid black; */
+
 }
 .title h1 {
-  font-size: 6vw;
+  font-size: 4vw;
+  padding: 0px 3vw;
+  margin-bottom: 0px;
 }
 .info {
   grid-area: info;
