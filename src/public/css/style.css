@@ -37,7 +37,8 @@ body {
   grid-template:
     "logo   title title title" 12.5vw
     "logo   info  info info"12.5vw
-    "sns    info  info info"12.5vw
+    /*SNSのアイコンの幅をいじることで上にする感じで大丈夫？*/
+    "sns    info  info info"10.5vw
     "constr info  info info"12.5vw     / 25vw 25vw 25vw 25vw;
   height: 50vw;
 }
@@ -57,12 +58,13 @@ body {
   grid-area: sns;
   display: flex;
   width: 25vw;
-  height: 12.5vw;
+  height: 10.5vw;
 }
 .sns a {
   margin: 0 5px;
   box-sizing: border-box;
-  padding: 3vw 0;
+  padding-top:  2vw; /*ここをいじれば高さは変えれる */
+  display: inline-block;
 }
 .sns img {
   height: auto;
@@ -80,9 +82,10 @@ body {
 .title {
   display: block;
   grid-area: title;
-  margin: 5vw 5vw 2vw 5vw;
+  margin: 5vw 5vw 0 5vw;
   /* border: black solid 2px; */
   width: 60vw;
+  height: 80%;
   text-align: center;
   height: 10vw;
   overflow: hidden;
@@ -90,9 +93,11 @@ body {
 
 }
 .title h1 {
-  font-size: 4vw;
-  padding: 0px 3vw;
+  display: block;
+  height: 100%;
+  font-size: 6vw;
   margin-bottom: 0px;
+  white-space: nowrap;/*これによってばっさーさんの環境でもダイジョブになるかも*/
 }
 .info {
   grid-area: info;
