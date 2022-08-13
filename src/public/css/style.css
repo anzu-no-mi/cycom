@@ -148,9 +148,13 @@ button {
 }
 /* 次への矢印 */
 .swiper-button-next {
-  right: 3vw;
+  left: 92vw;
   width: 5vw;
   top: 30vw;
 }
 
-.swiper-button-next {}
+.infomation{
+  height: 35vw;
+  width: 100%;
+
+}
