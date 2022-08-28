@@ -1,7 +1,7 @@
 .swiper {
   width: 60vw;
   height: 100%;
-  /* border: 1px solid red; */
+  border: 1px solid black;
   flex: 1fr;
 }
 .swiper-slide {
@@ -50,7 +50,6 @@
   /* height: 300px; */
   width: 25vw;
   height: 25vw;
-  
 }
 .sns {
   grid-area: sns;
@@ -157,4 +156,10 @@ button {
 .infomation {
   height: 35vw;
   width: 100%;
+}
+
+.first-view-container a img {
+  height: 5vw;
+  width: 5vw;
+  box-sizing: border-box;
 }
