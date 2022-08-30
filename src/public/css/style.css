@@ -56,15 +56,16 @@
   display: flex;
   width: 25vw;
   height: 10.5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .sns a {
   margin: 0 5px;
   box-sizing: border-box;
   /* padding-top: 2vw; ここをいじれば高さは変えれる */
   display: inline-block;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  
 }
 .sns img {
   height: auto;
