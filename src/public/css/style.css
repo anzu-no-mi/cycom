@@ -102,7 +102,7 @@
 .swiper-container {
   display: flex;
   margin: 0.5vw 7vw 0.5vw 5vw;
-  border: 0.1vw solid black;
+  border: 0.1vw solid gray;
 }
 .button-wrapper {
   height: 100%;
