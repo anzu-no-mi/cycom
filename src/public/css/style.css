@@ -1,9 +1,7 @@
-
-
 .swiper {
   width: 60vw;
   height: 100%;
-  /* border: 1px solid red; */
+  /* border: 1px solid black; */
   flex: 1fr;
 }
 .swiper-slide {
@@ -35,10 +33,10 @@
   display: grid;
   grid-template:
     "logo   title title title" 12.5vw
-    "logo   info  info info"12.5vw
+    "logo   info  info info" 12.5vw
     /*SNSのアイコンの幅をいじることで上にする感じで大丈夫？*/
-    "sns    info  info info"10.5vw
-    "constr info  info info"12.5vw     / 25vw 25vw 25vw 25vw;
+    "sns    info  info info" 10.5vw
+    "constr info  info info" 12.5vw / 25vw 25vw 25vw 25vw;
   height: 50vw;
 }
 .logo {
@@ -58,12 +56,16 @@
   display: flex;
   width: 25vw;
   height: 10.5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .sns a {
   margin: 0 5px;
   box-sizing: border-box;
-  padding-top:  2vw; /*ここをいじれば高さは変えれる */
+  /* padding-top: 2vw; ここをいじれば高さは変えれる */
   display: inline-block;
+  
 }
 .sns img {
   height: auto;
@@ -76,12 +78,12 @@
   border: solid black;
   border-radius: 150vw 150vw 150vw 150vw;
   text-align: center;
-  padding:3vw ;
+  padding: 3vw;
 }
 .title {
   display: block;
   grid-area: title;
-  margin: 5vw 5vw 0 5vw;
+  margin: 5vw 5vw 0 6.5vw;
   /* border: black solid 2px; */
   width: 60vw;
   height: 80%;
@@ -89,21 +91,19 @@
   height: 10vw;
   overflow: hidden;
   /* border: 1px solid black; */
-
 }
 .title h1 {
   display: block;
   height: 100%;
   font-size: 6vw;
   margin-bottom: 0px;
-  white-space: nowrap;/*これによってばっさーさんの環境でもダイジョブになるかも*/
+  white-space: nowrap; /*これによってばっさーさんの環境でもダイジョブになるかも*/
 }
-
 .swiper-container {
   display: flex;
   margin: 0.5vw 7vw 0.5vw 5vw;
+  border: 0.1vw solid black;
 }
-
 .button-wrapper {
   height: 100%;
   width: 0vw;
@@ -113,7 +113,6 @@
   justify-content: center;
   align-items: center;
 }
-
 .info {
   grid-area: info;
 }
@@ -124,25 +123,26 @@ img {
 }
 h1 {
   display: block;
-  font-size:4vw;
+  font-size: 4vw;
 }
-
 button {
   width: 100%;
   height: 100%;
   display: block;
   text-align: center;
 }
-
 .arrow {
   font-size: 3vw;
 }
-
 /* 前への矢印 */
 .swiper-button-prev {
   left: 32vw;
   width: 5vw;
   top: 30vw;
+  font-size: 3vw;
+}
+.swiper-button-prev::after{
+  font-size: 3vw;
 }
 /* 次への矢印 */
 .swiper-button-next {
@@ -150,9 +150,15 @@ button {
   width: 5vw;
   top: 30vw;
 }
-
-.infomation{
+.swiper-button-next::after{
+  font-size: 3vw;
+}
+.infomation {
   height: 35vw;
   width: 100%;
-
+}
+.first-view-container a img {
+  height: 5vw;
+  width: 5vw;
+  box-sizing: border-box;
 }
