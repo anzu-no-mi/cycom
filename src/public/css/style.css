@@ -166,11 +166,17 @@ button {
   display:grid;
   gap:10px;
   margin: 1vw;
+  color: #fff;
   grid-template-columns: repeat(8,1fr);
   grid-template-rows: repeat(10,12.5vw);
 }
 .solidborder{
   border: solid;
+  color:#000;
+}
+.subtitle{
+  font-size: 50%;
+  white-space: pre;
 }
 .news{
   grid-column: 1/4;
