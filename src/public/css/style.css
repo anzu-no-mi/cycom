@@ -220,7 +220,10 @@ button {
 .twitter{
   grid-column: 7/9;
   grid-row: 6/9;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
+
 .goods{
   grid-column: 7/9;
   grid-row: 9/10;
