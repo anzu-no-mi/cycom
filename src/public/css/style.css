@@ -274,3 +274,12 @@ button {
   grid-column: 7/9;
   grid-row: 10/11;
 }
+.to-block{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+a,a:hover,a:visited{
+  color: inherit;
+  text-decoration: none;
+}
