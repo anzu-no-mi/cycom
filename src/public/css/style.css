@@ -28,13 +28,46 @@
   height: 100%;
   object-fit: contain;
 }
+
+/*スライド1枚目*/
+.slide1 {/*親div*/
+  position: relative;/*相対配置*/
+  }
+.slide1 div {
+  position: absolute;/*絶対配置*/
+  color: #000;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+  margin:0;
+  padding:0;
+  /* white-space: nowrap; */
+  }
+  .slide-title {
+    font-size: 3vw;
+    white-space: nowrap;
+  }
+  .slide-text {
+    font-size: 1.5vw;
+  }
+  .slide-link {
+    color: #0000ff;
+    font-size: 1.5vw;
+    text-decoration: underline;
+  }
+  .slide1 img {
+    width: 100%;
+  }
+
+
 .first-view-container {
   margin: 0px 0px 0vw 3vw;
   display: grid;
   grid-template:
     "logo   title title title" 12.5vw
     "logo   info  info info" 12.5vw
-    /*SNSのアイコンの幅をいじることで上にする感じで大丈夫？*/
     "sns    info  info info" 10.5vw
     "constr info  info info" 12.5vw / 25vw 25vw 25vw 25vw;
   height: 50vw;
@@ -97,7 +130,7 @@
   height: 100%;
   font-size: 6vw;
   margin-bottom: 0px;
-  white-space: nowrap; /*これによってばっさーさんの環境でもダイジョブになるかも*/
+  white-space: nowrap;
 }
 .swiper-container {
   display: flex;
@@ -162,6 +195,8 @@ button {
   width: 5vw;
   box-sizing: border-box;
 }
+
+
 .second-view-container{
   display:grid;
   gap:10px;
