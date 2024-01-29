@@ -61,6 +61,13 @@
     width: 100%;
   }
 
+/*リアルイベントバナー*/
+  .slide-banner-link{
+    display: block;
+    width: 100vw;
+    height: 100vw;
+    z-index: 5;
+  }
 
 .first-view-container {
   margin: 0px 0px 0vw 3vw;
@@ -222,6 +229,19 @@ button {
   background: #ffce65;
 
 }
+  /* content-1 お知らせブロック内 */
+  .news-1{
+    padding-left: 1vw;
+    font-size: 1.2vw;
+  }
+  .content-text{
+    color: #000;
+    font-weight: bold;
+  }
+  .content-link{
+    text-decoration: underline;
+  }
+
 .content-2{
   border-radius: 0px 25px;
   grid-column: 5/9;

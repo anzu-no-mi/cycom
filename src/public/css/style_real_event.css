@@ -1,0 +1,94 @@
+/*タイトル*/
+.title-container{
+    text-align: center;
+}
+/*バナー画像*/
+.banner-container{
+    display:grid;
+    gap:10px;
+    margin: 1vw;
+}
+.banner{
+    width: 90vw;
+    margin: auto;
+}
+
+/*イベント紹介*/
+.intro-container{   
+    display:block;
+    margin: 1vw;
+    font-family: Arial, Helvetica, sans-serif;
+}
+    .intro-title{
+        width: 90vw;
+        margin: auto;
+        font-size: 3vw;
+    }
+    .intro-text{
+        margin: auto;
+        width: 90vw;
+        word-break: normal;
+        font-size: 1.5vw;
+    }
+    .entry-link{
+        font-size: 2vw;
+    }
+    .font-blue{
+        color:#0000ff;
+    }
+    .font-bold{
+        font-weight: bold;
+    }
+
+
+.content-container{
+    display:grid;
+    gap:10px;
+    margin: 1vw;
+    color: #000;
+    grid-template-columns: repeat(8,1fr);
+    grid-template-rows: repeat(10,12.5vw);
+}
+
+.none-googledrive{
+    grid-column: 1/5;
+    grid-row: 1/3;
+    padding: 1vw;
+    background: #ff9595;
+  }
+
+.use-googledrive{
+    grid-column: 5/9;
+    grid-row: 3/5;
+    padding: 1vw;
+    background: #7accff;
+}
+
+.content-label{
+    margin: 1vw;
+}
+
+.content-list{
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-rows: repeat(3, auto);
+    margin: 1vw;
+    color: #0000ff;
+}
+
+.content-link{
+    text-decoration: underline;
+}
+
+
+
+
+
+.tail-container{
+    font-size: 1.2vw;
+    display:grid;
+    gap:1px;
+    margin: 3vw 3vw 0vw 3vw;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: repeat(3,1vw);
+}
