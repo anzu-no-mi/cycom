@@ -1,15 +1,25 @@
+.event-lp{
+    width: 100vw;
+    margin: auto;
+}
+
 /*タイトル*/
 .title-container{
     text-align: center;
+    width: 100vw;
+}
+.event-title{
+    font-size: clamp(24px, 4vw, 50px);
+    word-break: keep-all;
+    width: 100vw;
 }
 /*バナー画像*/
 .banner-container{
-    display:grid;
-    gap:10px;
+    display:block;
     margin: 1vw;
 }
 .banner{
-    width: 90vw;
+    width: clamp(360px, 90vw, 1080px);
     margin: auto;
 }
 
@@ -20,18 +30,20 @@
     font-family: Arial, Helvetica, sans-serif;
 }
     .intro-title{
-        width: 90vw;
+        max-width: 1080px;
+        width:90vw;
         margin: auto;
-        font-size: 3vw;
+        font-size: clamp(20px, 3vw, 45px);
     }
     .intro-text{
         margin: auto;
-        width: 90vw;
+        max-width: 1080px;
+        width:90vw;
         word-break: normal;
-        font-size: 1.5vw;
+        font-size: clamp(15px, 1.8vw, 20px);
     }
     .entry-link{
-        font-size: 2vw;
+        font-size: clamp(18px, 2vw, 40px);
     }
     .font-blue{
         color:#0000ff;
@@ -40,8 +52,8 @@
         font-weight: bold;
     }
 
-
-.content-container{
+/*コンテンツ*/
+/*.content-container{
     display:grid;
     gap:10px;
     margin: 1vw;
@@ -75,20 +87,15 @@
     margin: 1vw;
     color: #0000ff;
 }
-
+*/
 .content-link{
     text-decoration: underline;
 }
 
-
-
-
-
+/*フッター*/
 .tail-container{
-    font-size: 1.2vw;
+    font-size: clamp(12px, 1.2vw, 20px);
     display:grid;
-    gap:1px;
-    margin: 3vw 3vw 0vw 3vw;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: repeat(3,1vw);
+    margin: 10vw 5vw 3vw 5vw;
+    grid-auto-flow: row;
 }
