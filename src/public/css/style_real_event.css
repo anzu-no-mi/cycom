@@ -1,18 +1,19 @@
 .event-lp{
-    width: 100vw;
+    width: 100%;
     margin: auto;
 }
 
 /*タイトル*/
 .title-container{
     text-align: center;
-    width: 100vw;
+    width: 100%;
 }
 .event-title{
-    font-size: clamp(24px, 4vw, 50px);
+    font-size: clamp(24px, 4vw, 50px); /*clamp(最小値,推奨値,最大値)*/
     word-break: keep-all;
-    width: 100vw;
+    width: 100%;
 }
+
 /*バナー画像*/
 .banner-container{
     display:block;
@@ -23,7 +24,7 @@
     margin: auto;
 }
 
-/*イベント紹介*/
+/*イベント紹介文*/
 .intro-container{   
     display:block;
     margin: 1vw;
@@ -51,6 +52,82 @@
     .font-bold{
         font-weight: bold;
     }
+
+/*外部サービスリンク一覧*/
+.ex-svc-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 3vw 5vw;
+    padding: 3vw 1vw;
+    gap: 1.5vw;
+    border: dotted #ff9090;
+    border-radius: 15px;
+}
+    .ex-svc-block{
+        display: inline;
+        text-align: center;
+        width: 100px;
+        background-color: #fff;
+        border-radius: 15px;
+    }
+    .up-t-block{
+        width: 200px;
+    }
+    .up-t-block a{
+        padding-bottom: 0;
+        width: 100%;
+    }
+    .up-t-img{
+        display: block;
+        height: 70px;
+        line-height: 80px;
+        width: 200px;
+        font-size: 40px;
+        margin: 0;
+    }
+    .note-block a{
+        width: 100%;
+    }
+
+        .logo-block{
+            display: flex;
+            height: 70px;
+            width: 100px;
+            justify-content: center;
+            margin: auto;
+        }
+        .logo-block img{
+            display: block;
+            width: 70px;
+            height: auto;
+            margin: auto;
+        }
+        .x-link img{
+            width: auto;
+            height: 55%;            
+        }
+        .youtube_link img{
+            width: auto;
+            height: 55%;            
+        }
+
+        .ex-svc-title{
+            display: block;
+            height: 30px;
+            font-size: 15px;
+            white-space: pre;
+        }
+
+
+
+
+
+
+
+
 
 /*コンテンツ*/
 /*.content-container{

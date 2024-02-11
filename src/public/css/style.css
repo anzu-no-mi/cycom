@@ -198,7 +198,7 @@ button {
   width: 100%;
 }
 .first-view-container a img {
-  height: 5vw;
+  height: auto;
   width: 5vw;
   box-sizing: border-box;
 }
