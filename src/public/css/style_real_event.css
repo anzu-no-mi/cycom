@@ -11,6 +11,7 @@
 }
 .event-title{
     font-size: clamp(24px, 4vw, 50px); /*clamp(最小値,推奨値,最大値)*/
+    white-space: pre-wrap;
     word-break: keep-all;
     width: 100%;
 }
