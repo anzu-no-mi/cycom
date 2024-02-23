@@ -132,7 +132,7 @@
     margin: 1vw;
     color: #000;
     grid-template-columns: repeat(8,1fr);
-    grid-template-rows: repeat(10,12.5vw);
+    grid-template-rows: repeat(5,12.5vw);
 }
 
 .rule-book-block{
@@ -151,7 +151,6 @@
 .content-label{
     font-size: clamp(20px, 4vw, 50px);
     margin: 1vw 2vw 0vw 2vw; /*top, right, bottom, left*/
-    /*background-color: #ffffffc5;*/
     border-radius: 15px;
 }
 
