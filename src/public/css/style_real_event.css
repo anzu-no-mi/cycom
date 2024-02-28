@@ -74,6 +74,7 @@
 }
 .shirt-design-block p{
     padding: 1vw;
+    font-size: clamp(15px, 1.8vw, 20px);
     margin: 0vw auto;
 }
 .shirt-design-block-child{
