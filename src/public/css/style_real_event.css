@@ -6,6 +6,7 @@
 
 /*タイトル*/
 .title-container{
+    margin: 3vw 0vw;
     text-align: center;
     width: 100%;
 }
@@ -14,6 +15,7 @@
     white-space: pre-wrap;
     word-break: keep-all;
     width: 100%;
+    font-weight: bold;
 }
 
 /*バナー画像*/
@@ -24,18 +26,22 @@
 .banner{
     width: clamp(360px, 90vw, 1080px);
     margin: auto;
+    overflow: hidden;
 }
-
+.swiper-slide{
+    padding: auto;
+}
 /*イベント紹介文*/
 .intro-container{   
     display:block;
-    margin: 1vw;
+    margin: 3vw 1vw 0vw 1vw; /*top, right, bottom, left*/
 }
     .intro-title{
         max-width: 1080px;
         width:90vw;
         margin: auto;
         font-size: clamp(20px, 3vw, 45px);
+        font-weight: bold;
     }
     .intro-text{
         margin: auto;
@@ -54,10 +60,9 @@
         font-weight: bold;
     }
 
-
 /*コンテンツ*/
 .content-container{
-    margin: 5vw 1vw;
+    margin: 3vw 1vw;
     color: #000;
 }
 .content-block{
@@ -68,7 +73,9 @@
 .content-title{
     font-size: clamp(18px, 4vw, 50px);
     margin: 0vw auto;
+    font-weight: bold;
 }
+
 .shirt-design-block{
     padding: 1vw;
 }
@@ -89,7 +96,10 @@
 .shirt-design-block-child img{
     width: 350px;
 }
-.rule-book-block{
+.shop-info-text a{
+    text-decoration: underline;
+}
+.logo-back-block{
     padding: 1vw;
     background-image: url(../img/onyaru_cycommu.png);
     background-size: 3000px;
@@ -101,6 +111,7 @@
     font-size: clamp(20px, 4vw, 50px);
     margin: 1vw 2vw 0vw 2vw; /*top, right, bottom, left*/
     border-radius: 15px;
+    font-weight: bold;
 }
 
 .content-list{
@@ -112,12 +123,24 @@
     color: #0000ff;
     background-color: #ffffffe0;
     border-radius: 15px;
+    gap : 1vw;
 }
 
 .content-link{
     width: 50vw;
     height: clamp(20px, 4vw, 60px);
     font-size: clamp(15px, 1.8vw, 20px);
+}
+.schedule-text{
+    color: #000;
+    gap : 0;
+}
+.schedule-text p{
+    font-size: clamp(15px, 1.8vw, 20px);
+}
+.schedule-text a{
+    color: #0000ff;
+    text-decoration: underline;
 }
 
 
@@ -155,6 +178,7 @@
         line-height: 80px;
         width: 200px;
         font-size: 40px;
+        font-weight: bold;
         margin: 0;
     }
     .note-block a{

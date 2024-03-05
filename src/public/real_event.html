@@ -5,8 +5,30 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Bootstrap Settings -->
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <!-- bootstrap icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
+    />
+
+    <!-- Swiper -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+    />
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
     <!-- My Scripts -->
     <link rel="stylesheet" href="css/style.css" />
+    <script type="text/javascript" src="js/index.js"></script>
     <link rel="stylesheet" href="css/style_real_event.css" />
 
     <title>サイゆる</title>
@@ -21,10 +43,23 @@
             </div>    
         </section>
 
-        <!-- バナー画像 -->
+        <!-- リアルイベントバナー -->
+        <!-- swiper -->
         <section class="banner-container">
-            <div class="banner">
-                <img src="img/real_event_banner_1.png" alt="RealEventBanner 1">
+        <!--section class="swiper-container info"-->
+            <div class="banner mySwiper">
+            <!--div class="swiper mySwiper"-->
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="img/real_event_banner_1.png" alt="RealEventBanner 1" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="img/real_event_banner_sky.png" alt="RealEventBanner 1" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="img/real_event_banner_withpc.png" alt="RealEventBanner 1" />
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -41,9 +76,9 @@
                         <span class="font-blue">関連記事</span>
                     </a>)<br>
                     従来の運動会のイメージとは異なる、一風変わった運動会をぜひ一緒に楽しみましょう！<br><br>
-                    <a class="content-link entry-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfzw4ZYUJg7kH3Yk96jvtWMx8jEL9UqCZ32AU4SKvJZtMx5RQ/viewform">
+                    <!-- <a class="content-link entry-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfzw4ZYUJg7kH3Yk96jvtWMx8jEL9UqCZ32AU4SKvJZtMx5RQ/viewform">
                         <span class="font-blue font-bold">エントリーはこちら</span>
-                    </a>
+                    </a> -->
                 </p>
             </div>
         </section>
@@ -51,11 +86,26 @@
 
         <!-- コンテンツ -->
         <section class="content-container">
+            <div class="content-block logo-back-block">
+                <h1 class="content-label">開催日程/会場</h1>
+                <div class="content-list schedule-text">
+                    <p>
+                        [日程]<br>
+                        　2024年3月17日(日) 12:30~17:00<br>
+                    </p>
+                    <p>
+                        [会場]<br>
+                        　リアクション2 (<a href="https://www.reaction-no2.com/">公式サイト</a>)<br>
+                        　※「氷川台駅」2番出口より徒歩7分
+                    </p>
+                </div>
+            </div>
+
             <div class="content-block shirt-design-block">
-                <h1 class="content-title">【Tシャツデザイン＆イベントロゴ決定！】</h1>
-                <p>
-                    Tシャツデザインとイベントロゴが決定しました✨
-                    Tシャツの販売開始は決定次第告知致します。お楽しみに！
+                <h1 class="content-title">【イベントTシャツ販売開始！】</h1>
+                <p class="shop-info-text">
+                    イベントTシャツショップがオープンしました✨以前紹介した以下のデザインはもちろん、新たなデザインも登場！<br />
+                    ショップページは<a href="https://up-t.jp/creator/65b799dc2babb">こちら</a>
                 </p>
                 <div class="shirt-design-block-child">
                     <img src="img/real_event_logo.png" alt="イベントロゴ">
@@ -63,7 +113,7 @@
                 </div>
             </div>
 
-            <div class="content-block rule-book-block">
+            <div class="content-block logo-back-block">
                 <h1 class="content-label">競技ルールブック</h1>
                 <div class="content-list">
                     <a class="content-link" href="https://drive.google.com/file/d/106BWOGiNOFU3eC-Y_-rMmB1W6npvngsk/view?usp=sharing">micro:bitカーリング</a>
@@ -82,17 +132,11 @@
 
             <!-- UP-Tショップ -->
             <div class="ex-svc-block up-t-block">
-                <a href="">
-                    <h1 class="up-t-img">準備中</h1>
-                    <div class="ex-svc-title">イベントオリジナルTシャツ</div>
-                </a>
-            </div>
-            <!-- <div class="ex-svc-block up-t-block">
-                <a href="https://up-t.jp/page.php?p=design_store">
+                <a href="https://up-t.jp/creator/65b799dc2babb">
                     <h1 class="up-t-img">UP-T</h1>
                     <div class="ex-svc-title">イベントオリジナルTシャツ</div>
                 </a>
-            </div> -->
+            </div>
 
             <!-- オンやるNoteアカウント -->
             <div class="ex-svc-block note-block">
