@@ -31,6 +31,27 @@
 .swiper-slide{
     padding: auto;
 }
+
+/*イベント完了報告*/
+.close-message-container{
+    display:block;
+    margin: 3vw 1vw 10vw 1vw; /*top, right, bottom, left*/
+}
+.close-message-container h1{
+    text-align: center;
+}
+.close-message-container p{
+    margin: 1vw 1vw 1vw 1vw; /*top, right, bottom, left*/
+    text-align: center;
+    max-width: 1080px;
+    width:90vw;
+    word-break: normal;
+    font-size: clamp(15px, 1.8vw, 20px);
+}
+.close-message a{
+    color: #0000ff;
+    text-decoration: underline;
+}
 /*イベント紹介文*/
 .intro-container{   
     display:block;
