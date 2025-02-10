@@ -71,6 +71,13 @@
         word-break: normal;
         font-size: clamp(15px, 1.8vw, 20px);
     }
+    .intro-text-2025{
+        margin: 0.8em auto 1.6em auto;
+        max-width: 1080px;
+        width:90vw;
+        word-break: normal;
+        font-size: clamp(15px, 1.8vw, 20px);
+    }
     .entry-link{
         font-size: clamp(18px, 2vw, 40px);
     }
