@@ -87,6 +87,11 @@
     .font-bold{
         font-weight: bold;
     }
+    .intro-container>hr{
+        width: clamp(360px, 90vw, 1080px);
+        margin: 0 auto;
+        margin-top: 5vw;
+    }
 
 /*コンテンツ*/
 .content-container{
