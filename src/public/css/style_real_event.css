@@ -87,6 +87,11 @@
     .font-bold{
         font-weight: bold;
     }
+    .intro-container>hr{
+        width: clamp(360px, 90vw, 1080px);
+        margin: 0 auto;
+        margin-top: 5vw;
+    }
 
 /*コンテンツ*/
 .content-container{
@@ -123,6 +128,19 @@
 }
 .shirt-design-block-child img{
     width: 350px;
+}
+.shirt-design-block-child-2025{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw 30px;
+    width: clamp(360px, 90vw, 1080px);
+    margin-bottom: 3vw;
+}
+.shirt-design-block-child-2025 img{
+    width: 300px;
 }
 .shop-info-text a{
     text-decoration: underline;
