@@ -1,0 +1,286 @@
+/* first-view-container */
+.first-view-container {
+  display: grid;
+}
+
+/* インフォメーション */
+.info {
+  grid-area: info;
+}
+
+/* second-view-container */
+.second-view-container{
+  display:grid;
+  color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .first-view-container {
+        margin: 2em 0px;
+        grid-template:
+            "info info" 30vw
+            "info info" 15.7vw
+            "logo ex-svc" 32vw / 50vw 50vw;
+    }  
+    .second-view-container{
+        gap:10px;
+        margin: 1vw;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .first-view-container {
+        margin: 1.5em 1vw 1.5em 2vw;
+        grid-template:
+            "logo   info  info info" 12.5vw
+            "logo    info  info info" 10.5vw
+            "ex-svc info  info info" 12.5vw / 25vw 25vw 25vw 25vw;
+    }  
+    .second-view-container{
+        grid-template-columns: repeat(2, 1fr);
+        gap:12px;
+        margin: 1vw 2vw 1vw 2vw;
+    }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+    .first-view-container {
+        margin: 1.5em 1vw 1.5em 2vw;
+        grid-template:
+            "logo   info  info info" 12.5vw
+            "logo    info  info info" 10.5vw
+            "ex-svc info  info info" 12.5vw / 25vw 25vw 25vw 25vw;
+    }  
+    .second-view-container{
+        grid-template-columns: repeat(2, 1fr);
+        gap:15px;
+        margin: 1vw 3vw 1vw 3vw;
+    }
+}
+
+@media screen and (min-width: 1441px) and (max-width: 1920px) {
+    .first-view-container {
+        margin: 1.5em 1vw 1.5em 2vw;
+        grid-template:
+            "logo   info  info info" 12.5vw
+            "logo    info  info info" 10.5vw
+            "ex-svc info  info info" 12.5vw / 25vw 25vw 25vw 25vw;
+    }  
+    .second-view-container{
+        grid-template-columns: repeat(3, 1fr);
+        gap:20px;
+        margin: 1vw 3vw 1vw 3vw;
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .first-view-container {
+        margin: 1.5em 1vw 1.5em 2vw;
+        grid-template:
+            "logo   info  info info" 12.5vw
+            "logo    info  info info" 10.5vw
+            "ex-svc info  info info" 12.5vw / 25vw 25vw 25vw 25vw;
+    }
+    .logo img {
+        width: 25vw;
+        height: 25vw;
+    }
+  
+    .second-view-container{
+        grid-template-columns: repeat(4, 1fr);
+        gap:25px;
+        margin: 1vw 3vw 1vw 3vw;
+    }
+}
+
+
+
+/* サイトロゴ */
+.logo {
+    grid-area: logo;
+}
+/*外部サービスリンク一覧*/
+.ex-svc-container{
+    grid-area: ex-svc;
+}
+.ex-svc-block{
+    background-color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .logo {
+        margin: 2vw 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .logo>img {
+        width: 34vw;
+        height: 34vw;
+        transform: translate(0vw, -1vw);
+    }
+    .ex-svc-container{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        justify-items: center;
+        align-items: center;
+        width: 38vw;
+        height: 30vw;
+        margin: 3vw 3vw 0 1vw;
+        padding: 2vw 2vw;
+        gap: 1vw 1vw;
+        border: dashed;
+        border-color: #91bee4;
+        border-radius: 20%;
+    }
+    .ex-svc-block{
+        display: inline;
+        text-align: center;
+        height: 12vw;
+        width: 12vw;
+    }
+    .ex-svc-block>a>div{
+        display: flex;
+        height: 12vw;
+        width: 12vw;
+        justify-content: center;
+        margin: auto;
+    }
+    .ex-svc-block>a>div>img{
+        box-sizing: border-box;
+        display: block;
+        height: 12vw;
+        width: 12vw;
+        margin: auto;
+    }
+    .ex-svc-block>.x-link>div>img{
+        width: auto;
+        height: 55%;
+    }
+    .ex-svc-block>.instagram-link>div>img{
+        width: auto;
+        height: 60%;
+    }
+    .ex-svc-block>.youtube_link>div>img{
+        width: auto;
+        height: 55%;            
+    }
+    .ex-svc-block>.note-link>div>img{
+        width: auto;
+        height: 100%;
+    }
+}
+@media screen and (min-width: 769px) {
+    .logo {
+        margin: auto 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .logo>img {
+        width: 25vw;
+        height: 25vw;
+    }
+    .ex-svc-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 25vw;
+        height: 10vw;
+        padding: 2.5vw 0;
+    }
+    .ex-svc-block{
+        display: inline;
+        text-align: center;
+        height: 6vw;
+        width: 6vw;
+    }
+    .ex-svc-block>a>div{
+        display: flex;
+        height: 6vw;
+        width: 6vw;
+        justify-content: center;
+        margin: auto;
+    }
+    .ex-svc-block>a>div>img{
+        box-sizing: border-box;
+        display: block;
+        height: 6vw;
+        width: 6vw;
+        margin: auto;
+    }
+    .ex-svc-block>.x-link>div>img{
+        width: auto;
+        height: 55%;
+    }
+    .ex-svc-block>.instagram-link>div>img{
+        width: auto;
+        height: 60%;
+    }
+    .ex-svc-block>.youtube_link>div>img{
+        width: auto;
+        height: 55%;            
+    }
+    .ex-svc-block>.note-link>div>img{
+        width: auto;
+        height: 100%;
+    }
+}
+
+
+
+
+/* second-view-container内のブロック */
+
+/* news-container お知らせブロック内 */
+.news-container{
+  background: #ffce65;
+  display: flex;
+  flex-direction: column;
+}
+.news-list{
+    margin: 1vw 2vw 2vw 2vw;
+    padding: 0 2vw;
+    background-color: #ffffffe0;
+    border-radius: 15px;
+    gap : 1vw;
+}
+.news-1>p{
+    margin: 0.5rem 0 ;
+}
+
+.content-container{
+    min-height: 15vw;
+}
+
+.content-2{
+  border-radius: 0px 25px;
+  background: #ff9090;
+}
+.content-5{
+  background: #4ffcebdd;
+}
+
+.content-label{
+    font-size: clamp(20px, 4vw, 50px);
+    margin: 1vw 2vw 0vw 2vw; /*top, right, bottom, left*/
+    border-radius: 15px;
+    font-weight: bold;
+}
+.content-link{
+  text-decoration: underline;
+}
+
+
+.to-block{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.news-list>.news-1>p>a,
+.news-list>.news-1>p>a:hover,
+.news-list>.news-1>p>a:visited{
+  color: revert;
+  text-decoration: revert;
+}
