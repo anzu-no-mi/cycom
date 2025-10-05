@@ -31,6 +31,10 @@
 .swiper-slide{
     padding: auto;
 }
+.real_event2026_banner>img{
+    height: 100%;
+    width: auto;
+}
 
 /* イベントダイジェスト動画 */
 .video-wrapper {
@@ -189,6 +193,7 @@
 }
 
 .content-link{
+    text-decoration: underline;
     width: 50vw;
     height: clamp(20px, 4vw, 60px);
     font-size: clamp(15px, 1.8vw, 20px);
@@ -204,6 +209,29 @@
     color: #0000ff;
     text-decoration: underline;
 }
+
+.cyyuru-x-block{
+    margin: 0.8em auto 1.6em auto;
+    max-width: 1080px;
+    width: 90vw;
+}
+.cyyuru-x-block>div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 0 3em 0;
+    padding: 2vw 2.5vw;
+}
+.cyyuru-x-block>div>.ex-svc-block{
+    border: dashed #f4b637;
+}
+.cyyuru-x-block>div>p{
+    font-size: clamp(15px, 1.8vw, 20px);
+    margin: 0 0 0 1em;
+    padding: 1vw 1vw;
+    max-width: 850px;
+}
+
 
 /*応援メッセージ*/
 .message-block{

@@ -1,0 +1,212 @@
+/* ヘッダー全体 */
+.header {
+  width: 100%;
+  background: #ffe167;
+  border-bottom: 1px solid #eee;
+}
+.navbar-custom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2vw;
+  height: 60px;
+  position: relative;
+}
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #222;
+}
+.navbar-brand img {
+  margin-right: 0.5em;
+  width: 40px;
+  height: 40px;
+}
+
+/* ハンバーガーメニュー */
+.navbar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: #ffb447;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 0;
+  z-index: 1002;
+}
+.navbar-toggle:hover {
+  background: #ff9e12; /* ホバー時の背景色 */
+}
+.navbar-toggle-icon,
+.navbar-toggle-icon::before,
+.navbar-toggle-icon::after {
+  display: block;
+  width: 28px;
+  height: 4px;
+  background: #222; /* ←アイコン色（必要に応じて変更） */
+  border-radius: 2px;
+  position: relative;
+  transition: all 0.3s;
+  content: '';
+}
+.navbar-toggle-icon {
+  position: relative;
+}
+.navbar-toggle-icon::before,
+.navbar-toggle-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+.navbar-toggle-icon::before {
+  top: -10px;
+}
+.navbar-toggle-icon::after {
+  top: 10px;
+}
+.navbar-toggle.open .navbar-toggle-icon {
+  background: transparent;
+}
+.navbar-toggle.open .navbar-toggle-icon::before {
+  transform: translateY(10px) rotate(45deg);
+}
+.navbar-toggle.open .navbar-toggle-icon::after {
+  transform: translateY(-10px) rotate(-45deg);
+}
+
+/* メニュー（ドロワー） */
+.navbar-menu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  right: 2vw;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  z-index: 1001;
+  min-width: 180px;
+  padding: 0.5em 0;
+}
+.navbar-menu.open {
+  display: block;
+}
+.navbar-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.navbar-menu li {
+  margin: 0;
+}
+.navbar-menu a {
+  display: block;
+  padding: 0.8em 1.5em;
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+}
+.navbar-menu a:hover {
+  background: #f0f0f0;
+}
+
+/* 横並びナビゲーション */
+.navbar-items {
+  display: none;
+}
+.navbar-items ul {
+  display: flex;
+  gap: 1.2vw;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.navbar-items li {
+  margin: 0;
+}
+.navbar-items a {
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5em 1em;
+  border-radius: 6px;
+  transition: background 0.2s;
+  font-size: 1.15rem; /* フォントサイズを少し大きく */
+}
+.navbar-items a:hover {
+  background: #ffd427;
+}
+
+
+/* レスポンシブ切り替え */
+/* サイトタイトル */
+@media (max-width: 450px) {
+    .navbar-brand>div>span{
+        display: none;
+    }
+}
+@media (min-width: 451px) {
+    .navbar-brand>div>span{
+        display: revert;
+    }
+}
+
+/* ナビゲーションメニュー */
+@media (max-width: 1280px) {
+  .navbar-toggle {
+    display: flex;
+  }
+  .navbar-menu {
+    display: none;
+  }
+  .navbar-menu.open {
+    display: block;
+  }
+  .navbar-items {
+    display: none;
+  }
+}
+/* モバイル端末の縦画面は常に① */
+@media (orientation: portrait) and (pointer: coarse) {
+  .navbar-toggle {
+    display: flex !important;
+  }
+  .navbar-menu {
+    display: none;
+  }
+  .navbar-menu.open {
+    display: block;
+  }
+  .navbar-items {
+    display: none !important;
+  }
+}
+/* 1281px以上 かつ モバイル縦画面以外 */
+@media (min-width: 1281px) and (orientation: landscape), (min-width: 1280px) and (pointer: fine) {
+  .navbar-toggle {
+    display: none;
+  }
+  .navbar-menu {
+    display: none !important;
+  }
+  .navbar-items {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+}
+
+.header, .navbar-custom, .navbar-left, .navbar-brand, .navbar-menu, .navbar-items {
+  font-family: Arial, Helvetica, sans-serif;
+}

@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    
     <!-- Bootstrap Settings -->
     <!-- Bootstrap CSS -->
     <link
@@ -27,44 +27,89 @@
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
     <!-- My Scripts -->
-    <link rel="stylesheet" href="css/style.css" />
+    <!-- <link rel="stylesheet" href="css/style_real_event.css" /> -->
+    <link rel="stylesheet" href="css/nav_top.css" />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/common_font.css" />
+    <link rel="stylesheet" href="css/style_swiper.css" />
+    <link rel="stylesheet" href="css/home.css" />
     <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/nav.js"></script>
 
     <title>サイこみゅ！</title>
   </head>
   <body>
-    <main>
-      <section class="first-view-container">
-        <!-- 左側 -->
+    <!-- ヘッダー -->
+    <header class="header">
+      <nav class="navbar-custom">
+        <div class="navbar-left">
+          <a class="navbar-brand" href="index.html">
+            <img src="img/cycom_logo.png" alt="cycom logo" width="30" height="30" class="d-inline-block align-text-top"/>
+            <div>サイこみゅ！<span class="subtitle"> -サイバーシティこみゅにてぃ-</span></div>
+          </a>
+        </div>
+        <!-- 1280px以下: ハンバーガーメニュー -->
+        <button class="navbar-toggle" id="navbar-toggle" aria-label="メニューを開く">
+          <span class="navbar-toggle-icon"></span>
+        </button>
+        <div class="navbar-menu" id="navbar-menu">
+          <ul>
+            <li><a href="index.html">ホーム</a></li>
+            <li><a href="real_event2026.html">サイゆる2026</a></li>
+            <li><a href="real_event2025.html">サイゆる2025</a></li>
+            <li><a href="real_event.html">サイゆる(第1回)</a></li>
+          </ul>
+        </div>
+        <!-- 1280px以上 かつ モバイル縦画面以外: 横並びナビゲーション -->
+        <div class="navbar-items">
+          <ul>
+            <li><a href="index.html">ホーム</a></li>
+            <li><a href="real_event2026.html">サイゆる2026</a></li>
+            <li><a href="real_event2025.html">サイゆる2025</a></li>
+            <li><a href="real_event.html">サイゆる(第1回)</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
 
+
+    <!-- メインコンテンツ -->
+    <main class="main-container">
+
+      <!-- first view -->
+      <section class="first-view-container">
         <!-- logo -->
         <div class="logo"><img src="img/cycom_logo.png" ></div>
-        <!-- sns -->
-        <div class="sns">
-          <a href="https://twitter.com/onyaru_cu">
-            <img class="sns-img" src='img/Twitter_logo_blue.png'/>
-          </a>
-          <a href="https://www.instagram.com/cybercity_committee/?hl=ja">
-            <img class="sns-img" src="img/Instagram_Glyph_Gradient_RGB.png"/>
-          </a>
-          <a href="https://www.youtube.com/">
-            <img class="sns-img" src="img/youtube_icon_rgb.png"/>
-          </a>
-          <a href="https://note.com/cybercity_commu">
-            <img class="sns-img" src="img/note_logo_symbol.png"/>
-          </a>
-        </div>
-
-        <!-- construction -->
-        <div class="constr">
-          <h1>工事中</h1>
-        </div>
-
-        <!-- 右側 -->
-
-        <!-- title -->
-        <div class="title">
-          <h1>サイバーシティこみゅにてぃ</h1>
+        <!-- 外部サービスリンク一覧 -->
+        <div class="ex-svc-container ">
+          <div class="ex-svc-block">
+            <a class="x-link" href="https://x.com/onyaru_cu">
+              <div>
+                <img src='img/X_logo-black.png'/>
+              </div>
+            </a>
+          </div>
+          <div class="ex-svc-block">
+            <a class="instagram-link" href="https://www.instagram.com/cybercity_committee/?hl=ja">
+              <div>
+                <img src="img/Instagram_Glyph_Gradient_RGB.png"/>
+              </div>
+            </a>
+          </div>
+          <div class="ex-svc-block">
+            <a class="youtube_link" href="https://www.youtube.com/">
+              <div>
+                <img src="img/youtube_icon_rgb.png"/>
+              </div>
+            </a>
+          </div>
+          <div class="ex-svc-block">
+            <a class="note-link" href="https://note.com/cybercity_commu">
+              <div>
+                <img src="img/note_logo_symbol.png"/>
+              </div>
+            </a>
+          </div>
         </div>
 
         <!-- swiper -->
@@ -74,41 +119,22 @@
 
               <!-- リアルイベントバナー -->
               <div class="swiper-slide slide1">
-                <img src="img/real_event2025_banner.png" alt="RealEvent2025Banner" />
+                <img src="img/real_event2026_banner.png" alt="RealEvent2026Banner" />
+                <div>
+                  <a class="slide-banner-link" href="real_event2026.html">
+                  </a>
+                </div>
+              </div>
+
+              <!-- リアルイベントバナー -->
+              <div class="swiper-slide slide1">
+                <img src="img/real_event2025_logo.png" alt="RealEvent2025Logo" />
                 <div>
                   <a class="slide-banner-link" href="real_event2025.html">
                   </a>
                 </div>
               </div>
 
-              <!-- サイこみゅ！紹介 -->
-              <div class="swiper-slide slide1">
-                <img src="img/slide_1.png" alt="Slide 1" />
-                <div>
-                  <h2 class="slide-title">
-                    サイバー大学生×ダイバーシティ×街
-                  </h2>
-                  <p class="slide-text">
-                    サイバーシティこみゅにてぃ(略称:サイこみゅ！)とは、<br />
-                    サイバー大学の学生・卒業生で作り上げるコミュニティです。<br />
-                  </p>
-                  <p>
-                    詳しくは以下のリンクをクリック↓<br />
-                    <a class="slide-link" href="https://note.com/piyoyayo_cycom/n/n81238a24ce1c?magazine_key=m9bd10b98dada">
-                      サイバーシティこみゅにてぃについて
-                    </a>
-                  </p>
-                </div>
-              </div>
-              <!-- div class="swiper-slide" -->
-                <!-- img src="img/slide_1.png" alt="Slide 2" / -->
-              <!-- /div -->
-              <!-- div class="swiper-slide" -->
-                <!-- p>Slide 3</p -->
-              <!-- /div -->
-              <!-- div class="swiper-slide" -->
-                <!-- p>Slide 4</p -->
-              <!-- /div -->
             </div>
             <div class="swiper-pagination"></div>
           </div>
@@ -116,65 +142,43 @@
           <div class="swiper-button-prev"></div>
         </div>
       </section>
+
+
+      <!-- second view -->
       <section class="second-view-container">
-        <div class="content-1">
-          <h1>お知らせ<div class="subtitle">-News-</div></h1>
-          <div class="news-1">
-            <p class="content-text">
-              2025年3月リアルイベント開催予定！<br />
-              詳しくは以下のリンクをクリック↓<br />
-              <a class="content-link" href="real_event2025.html">
-                サイバー大学生がゆるっとeレクやるってよ
-              </a>
-            </p>
-          </div>
-          <div class="news-1">
-            <p class="content-text">
-              2024年3月にリアルイベント開催しました！<br />
-              詳しくは以下のリンクをクリック↓<br />
-              <a class="content-link" href="real_event.html">
-                サイバー大学生、ゆるっとe運動会やるってよ！
-              </a>
-            </p>
+        <div class="news-container">
+          <h1 class="content-label">お知らせ<div class="subtitle">-News-</div></h1>
+          <div class="news-list">
+            <div class="news-1">
+              <p class="font-text">
+                2025年3月に開催しました！<br />
+                <a class="font-bold font-blue" href="real_event2025.html">
+                  【サイゆる2025】サイバー大学生がゆるっとeレクやるってよ
+                </a>
+              </p>
+            </div>
+            <div class="news-1">
+              <p class="font-text">
+                2024年3月に開催しました！<br />
+                <a class="font-bold font-blue" href="real_event.html">
+                  【サイゆる】サイバー大学生、ゆるっとe運動会やるってよ！
+                </a>
+              </p>
+            </div>
           </div>
         </div>
-        <div class="blank-1 solidborder"></div>
-        <div class="content-2">
+        <div class="content-container content-2">
           <a class="to-block" href="https://note.com/piyoyayo_cycom/n/n81238a24ce1c?magazine_key=m9bd10b98dada">
-            <h1>「サイこみゅ！」とは･･･<div class="subtitle">-What's "cycom"-</div></h1>
+            <h1 class="content-label">「サイこみゅ！」とは･･･<div class="subtitle">-What's "cycom"-</div></h1>
           </a>
         </div>
-        <div class="content-3">
-          <h1><div class="subtitle"></div></h1>
-        </div>
-        <div class="content-4">
-          <h1><div class="subtitle"></div></h1>
-        </div>
-        <div class="blank-2 solidborder"></div>
-        <div class="blank-3 solidborder"></div>
-        <div class="content-5"> 
+
+        <div class="content-container content-5"> 
           <a class="to-block" href="https://qiita.com/daisukeokaoss">
-            <h1>Qiita<div class="subtitle">-by daisuke-</div></h1>
+            <h1 class="content-label">Qiita<div class="subtitle">-by daisuke-</div></h1>
           </a>
         </div>
-        <div class="blank-4 solidborder"></div>
-        <div class="content-6">
-          <h1><div class="subtitle"></div></h1>
-        </div>
-        <div class="content-7"></div>
-        <div class="content-8"></div>
-        <div class="content-9 solidborder"></div>
-        <div class="content-10">
-          <a class="twitter-timeline" href="https://twitter.com/onyaru_cu?ref_src=twsrc%5Etfw">Tweets by onyaru_cu</a>
-          <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </div>
-        <div class="blank-5"></div>
-        <div class="content-11 solidborder"></div>
-        <div class="content-12"></div>
-        <div class="content-13">
-          <h1><div class="subtitle"></div></h1>
-        </div>
-        <div class="blank-6 solidborder"></div>
+
       </section>
     </main>
 
