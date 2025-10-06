@@ -139,3 +139,9 @@ a,a:hover,a:visited{
   color: inherit;
   text-decoration: none;
 }
+
+a:has(.font-blue),
+a:has(.font-blue):visited {
+  /* .font-blueを子要素に持つaタグに適用 */
+  text-decoration-color: #0000ff;
+}

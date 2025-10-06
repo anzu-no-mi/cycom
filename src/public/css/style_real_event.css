@@ -31,9 +31,19 @@
 .swiper-slide{
     padding: auto;
 }
-.real_event2026_banner>img{
-    height: 100%;
-    width: auto;
+
+/* 2026バナー画像 */
+@media (max-width: 640px) {
+    .real_event2026_banner>img{
+        width: 100%;
+        height: auto;
+    }
+}
+@media (min-width: 641px) {
+    .real_event2026_banner>img{
+        height: 100%;
+        width: auto;
+    }
 }
 
 /* イベントダイジェスト動画 */
