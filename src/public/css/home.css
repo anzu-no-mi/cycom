@@ -281,6 +281,9 @@
 .news-list>.news-1>p>a,
 .news-list>.news-1>p>a:hover,
 .news-list>.news-1>p>a:visited{
-  color: revert;
-  text-decoration: revert;
+    text-decoration: underline;
+    text-decoration-color: #0000ff;
+}
+.news-list>.news-1>p>a:hover{
+    text-decoration: none;
 }
