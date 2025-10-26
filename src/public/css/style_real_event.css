@@ -83,7 +83,7 @@
     text-decoration: underline;
 }
 /*イベント紹介文*/
-.intro-container{   
+.intro-container{
     display:block;
     margin: 3vw 1vw 0vw 1vw; /*top, right, bottom, left*/
 }
@@ -122,6 +122,47 @@
         margin: 0 auto;
         margin-top: 5vw;
     }
+/*記事*/
+.article-container{
+    display:block;
+    max-width: 1080px;
+    margin: 3vw auto 0vw auto; /*top, right, bottom, left*/
+    padding: 0;
+}
+.article{
+    display:block;
+    margin: 1vw 1vw 0 1vw; /*top, right, bottom, left*/
+}
+.article-title{
+    max-width: 1080px;
+    width: 90vw;
+    margin: auto;
+    font-size: clamp(20px, 3vw, 45px);
+    font-weight: bold;
+}
+.article>hr{
+    width: clamp(360px, 90vw, 1080px);
+    margin: 0 auto;
+    margin-top: 3vw;
+}
+.article-img{
+    padding: 0 2vw;
+    width: 100%;
+    height: auto;
+}
+.article-img>img{
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+.article-text{
+    font-size: clamp(15px, 1.8vw, 20px);
+    width: clamp(360px, 90vw, 1080px);
+    margin: 0vw auto 2vw auto; /*top, right, bottom, left*/
+    padding: 1vw 2vw;
+    word-break: normal;
+}
 
 /*コンテンツ*/
 .content-container{
