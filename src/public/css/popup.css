@@ -1,0 +1,55 @@
+.popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-overlay.active {
+  display: flex;
+}
+
+.popup-content {
+  background: #fff;
+  padding: 12px;
+  max-width: 800px;
+  width: 92%;
+  border-radius: 8px;
+  position: relative;
+}
+/* 1281px以上 かつ モバイル縦画面以外 */
+@media (min-width: 1281px) and (orientation: landscape), (min-width: 1280px) and (pointer: fine) {
+  .popup-content {
+    background: #fff;
+    padding: 20px;
+    max-width: 800px;
+    width: 90%;
+    border-radius: 10px;
+    position: relative;
+  }
+}
+
+.popup-content>p {
+  width: 100%;
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.popup-trigger {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}
