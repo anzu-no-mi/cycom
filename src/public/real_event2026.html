@@ -30,6 +30,8 @@
     <link rel="stylesheet" href="css/style.css" />
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/bookmark.js"></script>
+    <script type="text/javascript" src="js/popup.js" defer></script>
+    <link rel="stylesheet" href="css/popup.css" />
     <link rel="stylesheet" href="css/style_real_event.css" />
 
     <title>サイゆる2026</title>
@@ -130,7 +132,10 @@
                     <p>
                         <span class="font-bold"> [開催日時]</span><br>
                         ・第1回（夜の部）<br>
-                        　12月20日（土曜日）21:45~23:00（会場には21:15~入場することができます）<br>
+                        　12月20日（土曜日）21:45~23:00 ※第1回は終了しました。<br>　
+                        <span class="popup-trigger" data-popup="popup-cluster-first">
+                            第1回の内容をちょこっとおすそ分け🍬
+                        </span><br>
                         ・第2回（昼の部）<br>
                         　1月10日（土曜日）15:30~16:45（会場には15:00~入場することができます）<br>
                     </p>
@@ -246,5 +251,29 @@
             <a class="content-link" href="index.html">サイこみゅ！トップページ</a>
         </section>
     </main>
+
+
+    <div id="popup-cluster-first" class="popup-overlay">
+        <div class="popup-content">
+            <button class="popup-close">×</button>
+            <p class="article-text">
+                <span class="font-bold">【ちょこっとおすそ分け🍬】</span><br>
+                第１回目のcluster交流会は無事終了いたしました👏<br>
+                ご参加くださった方ありがとうございます😊<br><br>
+                交流会で実施した、ピクセルクイズの問題をおすそ分けです🎥<br>
+                何の画像であるか、2択から正解を選んでみてくださいね！<br>
+                次回の交流会もお楽しみに！✨
+            </p>
+
+            <video
+                controls
+                controlslist="nodownload noremoteplayback"
+                disablepictureinpicture
+                oncontextmenu="return false;"
+                width="100%">
+            </video>
+        </div>
+    </div>
+
   </body>
 </html>
