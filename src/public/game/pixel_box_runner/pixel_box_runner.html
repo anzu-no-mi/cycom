@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="stylesheet" href="pixel_box_runner.css" />
+        <title>Pixel Box Runner</title>
+    </head>
+    <body>
+        <main>
+            <!-- ✅ タイトル画面 -->
+            <div id="titleScreen" class="screen">
+                <div>
+                    <div>
+                        <!-- <img>だとSVG内部の外部フォントが読み込まれない場合があるため<object>で埋め込み、フォントを有効化します -->
+                        <object type="image/svg+xml" data="pixel_box_runner_logo.svg" aria-label="Pixel Box Runner ロゴ"></object>
+                    </div>
+                    <div id="howToPlay">
+                        <div class="howToPlayItem"><div class="keysStyle">←</div><div class="keysStyle">→</div>：移動</div>
+                        <div class="howToPlayItem"><div class="keysStyle">SPACE</div>：ジャンプ</div>
+                        <div class="howToPlayItem"><div class="keysStyle">c</div>：しゃがみ</div>
+                    </div>
+                    <button id="startBtn">スタート</button>
+                </div>
+            </div>
+            <!-- 🎮 プレイ画面 -->
+            <div id="gameScreen">
+                <canvas id="c" width="800" height="450"></canvas>
+                <!-- ⏱ HUD（スコア/タイム） -->
+                <div id="hud">
+                    <div id="hudScore">Score: -</div>
+                    <div id="hudTime">Time: -</div>
+                </div>
+            </div>
+            <!-- ✅ 結果画面 -->
+            <div id="resultScreen" class="screen">
+                <div>
+                    <h1>RESULT</h1>
+                    <div id="resultSummary">
+                        <h2>スコア</h2>
+                        <h2 id="resultScore"></h2>
+                    </div>
+                </div>
+                <div>
+                    <div class="resultBreakdown">
+                        <h3>アイテム</h3>
+                        <div id="resultItemDetail"></div>
+                    </div>
+                    <div class="resultBreakdown">
+                        <h3>被ダメージ</h3>
+                        <div id="resultEnemyDetail"></div>
+                    </div>
+                    <div class="resultBreakdown grid-column-2">
+                        <h3>残り時間</h3>
+                        <h3 id="resultTime"></h3>
+                    </div>
+                </div>
+                <button id="backToTitleBtn">ゲームトップへ戻る</button>
+            </div>
+            <!-- ゲームオーバー画面 -->
+            <div id="gameOverScreen" class="screen">
+                <h2>GAME OVER</h2>
+                <p>時間切れ...</p>
+                <button id="gameOverToTitleBtn">ゲームトップへ戻る</button>
+            </div>
+        </main>
+        <script type="text/javascript" src="pixel_box_runner.js"></script>
+    </body>
+</html>
