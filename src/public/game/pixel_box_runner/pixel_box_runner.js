@@ -1,12 +1,12 @@
 (() => {
-    //==========================================================
+    //===========================================================
     // 変数 / 状態管理
-    //==========================================================
+    //===========================================================
     const canvas = document.getElementById('c');
     const ctx = canvas.getContext('2d');
     const W = canvas.width, H = canvas.height;
 
-    let gameState = "title"; // "title", "countdown", "playing", "finished"
+    let gameState = "title"; // "title", "countdown", "playing", "result", "finished", "gameover"
 
     // 画面 DOM
     const titleScreen = document.getElementById("titleScreen");
@@ -29,10 +29,10 @@
     // カウントダウン表示用（null: 表示なし / 0..3: 表示中）
     let countdown = null;
 
+    // 画面ボタン DOM
     const startBtn = document.getElementById('startBtn');
     const backToTitleBtn = document.getElementById('backToTitleBtn');
     const gameOverToTitleBtn = document.getElementById('gameOverToTitleBtn');
-
 
     // ===== ゲームパラメータ =====
     const LEVEL_WIDTH = 4000;
@@ -81,6 +81,7 @@
     };
     const goal = {x:3800,y:50,w:80,h:330, reached:false, anim:0 };
 
+    // ===== ゲーム状態変数 =====
     let score = 0;
     let startTime = null;
     let elapsed = 0;
@@ -88,8 +89,134 @@
     let finished = false;
     let cameraX = 0;
 
-    // ===== 入力管理 =====
-    // 🔹 キー入力状態を記録するグローバル変数
+    //=========================================================
+    // 入力管理(キー設定)
+    //=========================================================
+    // キーセット定義 （input: イベント.code / label: 表示用ラベル）
+    const keySets = {
+        numpad: {
+            input: {
+                left: 'Numpad4',
+                right: 'Numpad6',
+                jump: 'Space',
+                crouch: 'KeyC'
+            },
+            label: {
+                left: '4',
+                right: '6',
+                jump: 'SPACE',
+                crouch: 'c'
+            }
+        },
+        arrow: {
+            input: {
+                left: 'ArrowLeft',
+                right: 'ArrowRight',
+                jump: 'Space',
+                crouch: 'KeyC'
+            },
+            label: {
+                left: '←',
+                right: '→',
+                jump: 'SPACE',
+                crouch: 'c'
+            }
+        },
+        wasd: {
+            input: {
+                left: 'KeyA',
+                right: 'KeyD',
+                jump: 'Space',
+                crouch: 'KeyS'
+            },
+            label: {
+                left: 'a',
+                right: 'd',
+                jump: 'SPACE',
+                crouch: 's'
+            }
+        }
+    };
+    // デフォルトのキーセットを numpad に設定
+    let currentKeySet = keySets.numpad;
+    // localStorage を確認
+    const saved = localStorage.getItem('keyset');
+    if (saved && keySets[saved]) {
+        // 保存されているキーセットがあれば適用
+        currentKeySet = keySets[saved];
+        document.querySelector(
+            `#keyConfig input[value="${saved}"]`
+        ).checked = true;
+    }
+    // 初期表示
+    updateHowToPlay(currentKeySet);
+    cloneHowToPlay();
+
+    // ラジオボタン変更時
+    document.querySelectorAll('#keyConfig input[name="keyset"]').forEach(radio => {
+        radio.addEventListener('change', e => {
+            if (gameState === 'playing') { // プレイ中は変更不可
+                e.preventDefault();
+                return;
+            }
+            const value = e.target.value;
+            currentKeySet = keySets[value];
+            localStorage.setItem('keyset', value);
+            updateHowToPlay(currentKeySet); // 表示更新
+        });
+    });
+
+    // ===== 表示更新関数 =====
+    function updateHowToPlay(keySet) {
+        document.querySelectorAll('.keysStyle').forEach(el => {
+            const action = el.dataset.action; // left / right / jump / crouch
+            if (keySet.label[action]) {
+                el.textContent = keySet.label[action];
+            }
+        });
+    }
+    // ===== キー設定有効/無効化関数 =====
+    function setKeyConfigEnabled(enabled) {
+        document.querySelectorAll('#keyConfig input[name="keyset"]').forEach(radio => {
+            radio.disabled = !enabled; // 有効/無効化
+
+            // ラベルのスタイル更新
+            const label = radio.closest('label');
+            if (!label) return; // ラベルが見つからない場合はスキップ
+            if (!enabled && !radio.checked) {
+                // 無効 ＆ 未選択 → class 付与
+                label.classList.add('keyConfigDisabled');
+            } else {
+                // 有効化 or 選択中 → class 除去
+                label.classList.remove('keyConfigDisabled');
+            }
+        });
+
+    }
+    // ===== 「遊び方」複製関数 =====
+    function cloneHowToPlay() {
+        const original = document.getElementById('howToPlay');
+        if (!original) return;
+
+        // すでに複製済みなら何もしない（多重生成防止）
+        if (document.getElementById('howToPlayClone')) return;
+
+        const clone = original.cloneNode(true);
+
+        // id 重複回避
+        clone.id = 'howToPlayClone';
+        // クラス追加
+        clone.classList.add('howToPlay');
+
+        // keyConfig の兄弟として追加
+        const keyConfig = document.getElementById('keyConfig');
+        keyConfig.parentNode.appendChild(clone);
+    }
+
+    //=========================================================
+    // 入力管理(ゲームプレイ中)
+    //=========================================================
+    // キーボード入力管理
     const keys = {
         left: false,
         right: false,
@@ -101,22 +228,22 @@
         // Space のデフォルト挙動（ページスクロール）抑止
         if (e.code === 'Space') e.preventDefault();
 
-        // 左：テンキー4 / 矢印左 / 上段の4
-        if (e.code === 'Numpad4' || e.code === 'ArrowLeft' || e.code === 'Digit4') keys.left = true;
-        // 右：テンキー6 / 矢印右 / 上段の6
-        if (e.code === 'Numpad6' || e.code === 'ArrowRight' || e.code === 'Digit6') keys.right = true;
+        // 左
+        if (e.code === currentKeySet.input.left)  keys.left = true;
+        // 右
+        if (e.code === currentKeySet.input.right) keys.right = true;
 
         // ジャンプ・しゃがみ
-        if (e.code === 'Space') keys.jump = true;
-        if (e.code === 'KeyC') keys.crouch = true;
+        if (e.code === currentKeySet.input.jump)   keys.jump = true;
+        if (e.code === currentKeySet.input.crouch) keys.crouch = true;
         // デバッグ用
-        // console.log('keydown:', e.code, keys);
+        console.log('keydown:', e.code, keys);
     });
     window.addEventListener('keyup', e => {
-        if (e.code === 'Numpad4' || e.code === 'ArrowLeft' || e.code === 'Digit4') keys.left = false;
-        if (e.code === 'Numpad6' || e.code === 'ArrowRight' || e.code === 'Digit6') keys.right = false;
-        if (e.code === 'Space') { keys.jump = false; jumpPressed = false; } // ← ここが重要（着地後に再ジャンプ可能にする）
-        if (e.code === 'KeyC') keys.crouch = false;
+        if (e.code === currentKeySet.input.left)  keys.left = false;
+        if (e.code === currentKeySet.input.right) keys.right = false;
+        if (e.code === currentKeySet.input.jump) { keys.jump = false; jumpPressed = false; } // ← 着地後に再ジャンプ可能にする
+        if (e.code === currentKeySet.input.crouch) keys.crouch = false;
         // デバッグ用
         // console.log('keyup:', e.code, keys);
     });
@@ -136,6 +263,7 @@
         const dateSeed = getJSTDateString(); // 例: "2026-01-18"
         const rand = createSeededRandom(dateSeed);
 
+        // 敵生成
         const enemyCount = 7;
         for(let i=0;i<enemyCount;i++){
             let p = platforms[1 + Math.floor(rand()*(platforms.length-1))];
@@ -150,6 +278,8 @@
             const bx = Math.min(p.x + p.w - w, x + margin);
             enemies.push({category: "enemy",x,y,w,h,ax,bx,v:speed,damage,type});
         }
+
+        // アイテム生成
         const itemCount = 9;
         for(let i=0;i<itemCount;i++){
             let p = platforms[1 + Math.floor(rand()*(platforms.length-1))];
@@ -161,32 +291,9 @@
         }
     }
 
-    // 衝突解決（分離）
-    function resolveHorizontal(player){
-        for(let p of platforms){
-            if(rectIntersect({x:player.x,y:player.y,w:player.w,h:player.h}, {x:p.x,y:p.y,w:p.w,h:p.h})){
-                if(player.vx > 0){ player.x = p.x - player.w; player.vx = 0; }
-                else if(player.vx < 0){ player.x = p.x + p.w; player.vx = 0; }
-            }
-        }
-    }
-    function resolveVertical(player){
-        player.onGround = false;
-        for(let p of platforms){
-            if(rectIntersect({x:player.x,y:player.y,w:player.w,h:player.h}, {x:p.x,y:p.y,w:p.w,h:p.h})){
-                if(player.vy > 0 && (player.y + player.h - player.vy) <= p.y + 6){
-                    player.y = p.y - player.h; player.vy = 0; player.onGround = true;
-                } else if(player.vy < 0 && (player.y) >= p.y + p.h - 1){
-                    player.y = p.y + p.h; player.vy = 0;
-                } else {
-                    if(player.x < p.x) player.x = p.x - player.w; else player.x = p.x + p.w;
-                    player.vx = 0;
-                }
-            }
-        }
-    }
-
+    //===========================================================
     // メイン更新処理
+    //===========================================================
     function update(dt){
         if(playing && !finished){
             if (gameState !== "playing") return;   // プレイ時以外は update しない
@@ -196,8 +303,7 @@
             const prevX = player.x;
             const prevY = player.y;
 
-            // ← 対応キー: Numpad4 / ArrowLeft / Digit4
-            // → 対応キー: Numpad6 / ArrowRight / Digit6
+            // キー入力取得
             const left = keys.left;
             const right = keys.right;
             const jump = keys.jump;
@@ -265,9 +371,9 @@
             if (player.vx > 0.1) player.facing = 'right';
             else if (player.vx < -0.1) player.facing = 'left';
 
-            // ============================
+            //=============================
             // 🔹 重力カーブ重力カーブ＋短押し対応＋頂点滞空
-            // ============================
+            //=============================
             // 通常の基礎重力
             const BASE_GRAVITY = 0.6;
             let gravity = BASE_GRAVITY;
@@ -293,9 +399,9 @@
             // --- 重力適用 ---
             player.vy += gravity;
 
-            //  ============================
+            //==========================
             // 🔹 横移動
-            //  ============================
+            //==========================
             player.x += player.vx;
             // 横方向の衝突チェック
             for (let p of platforms) {
@@ -349,9 +455,9 @@
                 }
             }
 
-            //  ============================
+            //==========================
             // 🔹 縦移動
-            //  ============================
+            //==========================
             player.y += player.vy;
             player.onGround = false;
             for(let p of platforms){
@@ -408,18 +514,18 @@
                 }
             }
 
-            // =========================
+            //==========================
             // 🔹 ジャンプ処理
-            // =========================
+            //==========================
             if(jump && player.onGround && !jumpPressed){
                 player.vy = -14; // 上向きに強い初速を与える（負が上方向）
                 player.onGround = false;
                 jumpPressed = true;
             }
 
-            // =========================
+            //==========================
             // 🔹 境界・落下・スコアなど
-            // =========================
+            //==========================
             player.x = clamp(player.x, 0, LEVEL_WIDTH - player.w);
             player.y = Math.min(player.y, H + 600);
 
@@ -433,9 +539,9 @@
                 score = Math.max(0, score - 1);
             }
 
-            // =========================
+            //==========================
             // 🔹 敵・アイテム・ゴール判定
-            // =========================
+            //==========================
             // --- 敵の移動更新 ---
             for(let e of enemies){ e.x += e.v; if(e.x < e.ax){ e.x=e.ax; e.v*=-1 } if(e.x>e.bx){ e.x=e.bx; e.v*=-1 } }
 
@@ -490,7 +596,10 @@
             }
 
             // --- タイムアップ判定 ---
-            if(elapsed >= TIME_LIMIT){ finished = true; playing = false; }
+            if(elapsed >= TIME_LIMIT){
+                finished = true;
+                playing = false;
+            }
 
             // --- スコア・時間表示更新 ---
             elScore.textContent = `Score: ${score}`;
@@ -498,8 +607,11 @@
         }
     }
 
+    //===========================================================
     // パーティクル管理（colプロパティで統一）
+    //===========================================================
     let particles = [];
+    // ゴール到達時の花火パーティクル生成
     function spawnGoalParticles(x, y){
         const colors = ['#ffea00','#00ffcc','#ff66cc','#ff8c00'];
         for(let i=0;i<40;i++){
@@ -513,6 +625,7 @@
             });
         }
     }
+    // パーティクル更新
     function updateParticles(){
         for(let i=particles.length-1;i>=0;i--){
             const p = particles[i];
@@ -521,6 +634,7 @@
             if(p.life <= 0) particles.splice(i,1);
         }
     }
+    // パーティクル描画
     function drawParticles(ctx, cameraX){
         for(let p of particles){
             ctx.globalAlpha = Math.max(p.life / 80, 0);
@@ -530,7 +644,9 @@
         ctx.globalAlpha = 1;
     }
 
+    //===========================================================
     // 描画処理
+    //===========================================================
     function draw(){
         ctx.clearRect(0,0,W,H); // 画面クリア
 
@@ -554,7 +670,6 @@
         const flagX = goal.x - cameraX + 10; const flagY = goal.y + 6;
         const sway = Math.sin(Date.now()/200) * 8 * (goal.reached ? 1 + goal.anim : 1);
         ctx.fillStyle = '#e74c3c'; ctx.beginPath(); ctx.moveTo(flagX, flagY); ctx.lineTo(flagX + 60 + sway, flagY + 25); ctx.lineTo(flagX, flagY + 50); ctx.closePath(); ctx.fill();
-
 
         // アイテム描画
         for(let it of items){
@@ -648,16 +763,20 @@
             setTimeout(500); // 0.5秒後に結果画面表示
             gameState = "gameover";
             showScreen("gameover");
+            setKeyConfigEnabled(true); // キー設定を有効化
         }
 
         // 結果画面へ遷移
         if (gameState === "playing" && goal.reached && finishedEffectEnded) {
             gameState = "result";
             showResultScreen();
+            setKeyConfigEnabled(true); // キー設定を有効化
         }
     }
 
-    // ===== メインループ =====
+    //===========================================================
+    // メインループ
+    //===========================================================
     let last = performance.now();
     function loop(t){
         const dt = (t - last) / 1000; last = t;
@@ -669,13 +788,19 @@
     }
     requestAnimationFrame(loop);
 
-    // ===== 画面表示切替処理 =====
+    //===========================================================
+    // 画面表示切替処理
+    //===========================================================
     function showScreen(name) {
         titleScreen.style.display = (name === "title") ? "flex" : "none";
         gameScreen.style.display = (name === "playing") ? "flex" : "none";
         resultScreen.style.display = (name === "result") ? "grid" : "none";
         gameOverScreen.style.display = (name === "gameover") ? "flex" : "none";
     }
+
+    //===========================================================
+    // ゲーム開始・リスタート処理
+    //===========================================================
     // ===== プレイ前カウントダウン処理 =====
     function startCountdown() {
         let count = 3;
@@ -692,17 +817,18 @@
             }
         }, 1000);
     }
-    // ゲーム開始・リスタート
+    // ===== ゲーム開始・リスタート =====
     function startGame(){
+        setKeyConfigEnabled(false); // キー設定を無効化
         // 状態初期化
         resetGameState();
         playing = true;
         // エンティティ生成
-        generateEntities();                    
+        generateEntities();
         // ✅ プレイ前カウントダウン（例：3 → 2 → 1 → START）
         startCountdown();
     }
-    // ゲーム状態リセット処理
+    // ===== ゲーム状態リセット処理 =====
     function resetGameState() {
         // ===== プレイヤー初期化 =====
         player.x = 80; 
@@ -748,11 +874,10 @@
         startGame(); // 既存のゲーム開始処理を呼ぶ
     };
 
-    //==========================================================
+    //===========================================================
     // 終了処理 → リザルトへ
-    //==========================================================
+    //===========================================================
     async function showResultScreen() {
-        gameState = "finished";
         resultItemDetail.innerHTML = "";
         resultEnemyDetail.innerHTML = "";
         resultScreen.style.display = "grid";
@@ -818,6 +943,7 @@
             displayScore++;
             resultScore.textContent = displayScore;
         }
+        gameState = "finished";
     }
     // (回数集計)
     function getItemStats(){
@@ -858,17 +984,19 @@
         };
     }
 
-    // ===== タイトルへ戻る処理 =====
+    //===========================================================
+    // タイトルへ戻る処理
+    //===========================================================
     backToTitleBtn.onclick = () => {
         // ===== 状態フラグを戻す =====
-        gameState = "title";                    
+        gameState = "title";
         resetGameState();
         // ===== タイトル画面を表示 =====
         showScreen("title");
     };
     gameOverToTitleBtn.onclick = () => {
         // ===== 状態フラグを戻す =====
-        gameState = "title";                    
+        gameState = "title";
         resetGameState();
         // ===== タイトル画面を表示 =====
         showScreen("title");

@@ -6,16 +6,33 @@ html,body{
     color:#fff;
 }
 main{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    height:100%;
+}
+
+/* ゲーム画面 Wrap */
+#gameContentsWrap{
     min-width: 832px;
     min-height: 482px;
     width: 832px;
     height: 482px;
     aspect-ratio:16/9;
     padding: 0;
-    margin: auto;
     position:relative;
     background:#111;
 }
+/* その他のコンテンツ Wrap */
+#otherContentsWrap{
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    width: 832px;
+    padding: 30px 24px;
+}
+
+/* ゲーム画面 */
 #titleScreen{
     display:flex;
     flex-direction:column;
@@ -125,14 +142,14 @@ button{
     margin-top: 10px;
     margin-bottom: 30px;
 }
-#howToPlay {
+.howToPlay {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 80px;
     row-gap: 6px;
     margin: 0 0 10px 0;
 }
-#howToPlay .howToPlayItem {
+.howToPlay .howToPlayItem {
     display: flex;
     align-items: center;
     margin-bottom: 6px;
@@ -141,7 +158,7 @@ button{
     color: #ffffff;
 }
 
-#howToPlay .keysStyle {
+.howToPlay .keysStyle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -221,4 +238,52 @@ button{
 #resultScreen .enemy {
     width: 16px;
     height: 16px;
+}
+
+/* キー設定 */
+#configPanel{
+    display:grid;
+    background:#222;
+    border-radius:8px;
+    width: 80%;
+    padding:16px 30px;
+    grid-template-columns: 1fr 4fr;
+    column-gap: 16px;
+    row-gap: 12px;
+}
+#configPanel>h3{
+    margin: 0;
+    padding: 8px 20px 12px 20px;
+    grid-column: span 2;
+    border-bottom: #555 2px double;
+}
+#keyConfig{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    align-items: flex-start;
+    padding: 6px;
+    gap: 8px;
+    border-right: #333 2px double
+}
+
+#keyConfig>label{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:8px;
+}
+#howToPlayClone{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 0 20px;
+    column-gap: 12px;
+    row-gap: 6px;
+    margin: 0;
+}
+/* 選択されていないラベル(ゲームプレイ中のみ付与) */
+.keyConfigDisabled {
+    color: #777;
+    opacity: 0.5; /* 透明度を下げる */
+    cursor: not-allowed;
 }
