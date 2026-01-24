@@ -219,10 +219,6 @@ button{
     height: 100%;
     padding: 12px;
 }
-#resultScreen .resultItemDetail,
-#resultScreen .resultEnemyDetail{
-    gap: 6px;
-}
 #resultScreen .resultRow {
     display: flex;
     align-items: center;

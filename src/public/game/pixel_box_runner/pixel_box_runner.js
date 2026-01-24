@@ -54,14 +54,22 @@
     ];
 
     // ===== プレイヤー =====
-    const player = { x:80, y:300, w:34, h:48, vx:0, vy:0, onGround:false, crouch:false, invincibleUntil:0, z: 0 };
+    const player = {
+        x:80, y:300, w:34, h:48,
+        vx:0, vy:0,
+        onGround:false,
+        crouch:false,
+        invincibleUntil:0,
+        z:0,
+        facing:'right'  // 初期は右向き
+    };
 
     // ===== 敵・アイテム・ゴール =====
     let enemies = [];
     const ENEMY_COLORS = {
-        1: '#d64541',
-        2: '#ff8c00',
-        3: '#8e44ad'
+        1: '#3A86FF',
+        2: '#FFBE0B',
+        3: '#8338EC'
     }
     const ENEMY_DAMAGE = {
         1: 1,
@@ -70,9 +78,9 @@
     };
     let items = [];
     const ITEM_COLORS = {
-        1: '#ffea00',
-        2: '#00ffcc',
-        3: '#66b3ff'
+        1: '#00F5D4',
+        2: '#F15BB5',
+        3: '#FFD60A'
     }
     const ITEM_SCORE = {
         1: 1,
@@ -727,7 +735,15 @@
 
         // 顔（目）部分
         ctx.fillStyle = '#222';
-        ctx.fillRect(px+8, py+10 + (player.h - ph), 6, 6);
+        const eyeY = py + 10 + (player.h - ph);
+        let eyeX;
+        // 向きによって目の位置を変更
+        if (player.facing === 'right') {
+            eyeX = px + player.w - 8 - 6;      // 左向き：右端基準で反転
+        } else {
+            eyeX = px + 8;                     // 今まで通り
+        }
+        ctx.fillRect(eyeX, eyeY, 6, 6);
         ctx.restore();
 
         // 🔸滑っているときに足元に白いスリップラインを出す（演出）
