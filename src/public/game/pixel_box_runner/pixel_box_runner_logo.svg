@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="260" viewBox="0 0 620 260" preserveAspectRatio="xMidYMid meet">
+
+  <!-- Press Start 2P 読み込み -->
+  <defs>
+    <style type="text/css"><![CDATA[
+      @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+      .bg { fill: #000000; }
+      .text { fill: #00FF66; font-family: 'Press Start 2P', monospace; shape-rendering: crispEdges; }
+      .char-box { fill: #000000; stroke: #00FFFF; stroke-width: 6; shape-rendering: crispEdges; }
+      .eye { fill: #00FFFF; shape-rendering: crispEdges; }
+      .arrow { fill: #00FF66; shape-rendering: crispEdges; }
+      .speed-line { fill: none; stroke: rgba(0,255,102,0.18); stroke-width: 6; stroke-linecap: round; }
+      .blur { fill-opacity: 0.4; }
+      .italic { font-style: italic; }
+    ]]></style>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" x="0" y="0" width="620" height="260"/>
+  <g>
+    <!-- === Top: PIXEL === -->
+    <g transform="translate(28,110)">
+      <!-- PIXEL -->
+      <text class="text" x="0" y="0" font-size="62">PIXEL</text>
+    </g>
+
+    <!-- === Middle: B□X === -->
+    <g transform="translate(380,110)">
+      <!-- BOX → B [□] X -->
+      <text class="text" x="0" y="0" font-size="62">B</text>
+
+      <!-- O の代わりに □（キャラ）: 小さくして B/X と同じ高さに見えるように調整 -->
+      <g transform="translate(72,-58)">
+        <!-- 小さめに（48x48） -->
+        <rect class="char-box" width="48" height="48"/>
+        <!-- 目の位置もキャラサイズに合わせて調整 -->
+        <rect class="eye" x="11" y="14" width="8" height="8"/>
+        <rect class="eye" x="29" y="14" width="8" height="8"/>
+      </g>
+
+      <!-- X -->
+      <text class="text" x="128" y="0" font-size="62">X</text>
+    </g>
+
+    <!-- === Bottom: RUNNER + ▶▶▶  (左揃え) === -->
+    <g transform="translate(60,200)">
+      <!-- motion blur copies -->
+      <text class="text italic blur" x="6" y="0" font-size="58">RUNNER</text>
+      <text class="text italic blur" x="3" y="0" font-size="58">RUNNER</text>
+      <text class="text italic"      x="0" y="0" font-size="58">RUNNER</text>
+
+      <!-- ▶▶▶ arrows: 大きくして RUNNER と同じ高さに見えるように調整（scale を適用） -->
+      <!-- translate と scale の順に注意 -->
+      <g transform="translate(390,-70) scale(1.2)">
+        <polygon class="arrow" points="0,20 22,32 0,44"/>
+        <polygon class="arrow" points="28,20 50,32 28,44" opacity="0.7"/>
+        <polygon class="arrow" points="56,20 78,32 56,44" opacity="0.4"/>
+      </g>
+
+      <!-- speed lines -->
+      <g transform="translate(-70,-15)">
+        <line class="speed-line" x1="76" y1="28" x2="540" y2="28" />
+        <line class="speed-line" x1="126" y1="36" x2="600" y2="36" stroke-width="4" />
+      </g>
+    </g>
+  </g>
+</svg>

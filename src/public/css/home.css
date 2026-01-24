@@ -26,6 +26,16 @@
         gap:10px;
         margin: 1vw;
     }
+
+    #pixel-box-runner-logo {
+        margin-top: 1vw;
+        padding: 0 1em 1em 1em;
+        text-align: end;
+    }
+    #pixel-box-runner-logo object {
+        width: 70%;
+        height: auto;
+    }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
@@ -40,6 +50,16 @@
         grid-template-columns: repeat(2, 1fr);
         gap:12px;
         margin: 1vw 2vw 1vw 2vw;
+    }
+
+    #pixel-box-runner-logo {
+        margin-top: 1vw;
+        padding: 0 1em 1em 1em;
+        text-align: end;
+    }
+    #pixel-box-runner-logo object {
+        width: 70%;
+        height: auto;
     }
 }
 
@@ -56,6 +76,16 @@
         gap:15px;
         margin: 1vw 3vw 1vw 3vw;
     }
+
+    #pixel-box-runner-logo {
+        margin-top: 1vw;
+        padding: 0 1em 1em 1em;
+        text-align: end;
+    }
+    #pixel-box-runner-logo object {
+        width: 70%;
+        height: auto;
+    }
 }
 
 @media screen and (min-width: 1441px) and (max-width: 1920px) {
@@ -70,6 +100,18 @@
         grid-template-columns: repeat(3, 1fr);
         gap:20px;
         margin: 1vw 3vw 1vw 3vw;
+    }
+
+    #pixel-box-runner-logo {
+        margin-top: 1vw;
+        padding: 4em 1em;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    #pixel-box-runner-logo object {
+        width: 90%;
+        height: auto;
     }
 }
 
@@ -90,6 +132,18 @@
         grid-template-columns: repeat(4, 1fr);
         gap:25px;
         margin: 1vw 3vw 1vw 3vw;
+    }
+
+    #pixel-box-runner-logo {
+        margin-top: 1vw;
+        padding: 5em 1em;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    #pixel-box-runner-logo object {
+        width: 90%;
+        height: auto;
     }
 }
 
@@ -257,8 +311,12 @@
   border-radius: 0px 25px;
   background: #ff9090;
 }
+.content-3{
+  border-radius: 25px 25px;
+  background: #49cb4ddd;
+}
 .content-5{
-  background: #4ffcebdd;
+  background: #be62ffd5;
 }
 
 .content-label{

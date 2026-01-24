@@ -117,6 +117,9 @@
     .font-bold{
         font-weight: bold;
     }
+    .line-through{
+    text-decoration: line-through;
+    }
     .intro-container>hr{
         width: clamp(360px, 90vw, 1080px);
         margin: 0 auto;
