@@ -1,0 +1,111 @@
+.fixed-hamburger {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 9999;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #0d6efd;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(13, 110, 253, 0.2);
+    cursor: pointer;
+    border: none;
+}
+
+.fixed-hamburger:focus {
+    outline: 2px solid rgba(13, 110, 253, 0.25);
+}
+
+.side-toc {
+    position: fixed;
+    right: 20px;
+    bottom: 90px;
+    z-index: 9998;
+    width: 320px;
+    max-height: 60vh;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    overflow: auto;
+    padding: 12px 12px 8px 12px;
+    display: none;
+}
+
+.side-toc.open {
+    display: block;
+}
+
+.side-toc h3 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+}
+
+.side-toc .close-btn {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    right: 8px;
+    top: 6px;
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.side-toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 項目内リンクをブロックにして絵文字・記号が崩れないようにフォントと折返しを調整 */
+.side-toc,
+.side-toc li,
+.side-toc li a {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Meiryo", "Yu Gothic", "Noto Color Emoji", "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.side-toc li {
+    /* keep existing spacing/borders but move padding to anchor */
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+}
+
+.side-toc li a {
+    display: block;
+    padding: 8px 6px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.side-toc li a:hover {
+    background: #f8f9fa;
+}
+
+@media(max-width:480px) {
+    .side-toc {
+        right: 12px;
+        left: 12px;
+        width: auto;
+        bottom: 84px;
+        max-height: 50vh;
+    }
+}
+
+/* スムーズスクロールを補助 */
+html {
+    scroll-behavior: smooth;
+}
+
+/* NEWマーク */
+.toc-new {
+    color: #f44;
+    font-weight: 700;
+}
