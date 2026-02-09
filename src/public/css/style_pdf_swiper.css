@@ -1,0 +1,21 @@
+/* PDFスライドショー */
+.pdf-slides {
+    display: flex;
+}
+
+.pdf-swiper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.pdf-swiper .swiper-wrapper {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.pdf-swiper .swiper-slide {
+    width: 100%;
+    flex-shrink: 0; /* 幅圧縮防止 */
+}

@@ -28,9 +28,6 @@
     margin: auto;
     overflow: hidden;
 }
-.swiper-slide{
-    padding: auto;
-}
 
 /* 2026バナー画像 */
 @media (max-width: 640px) {
@@ -165,6 +162,20 @@
     margin: 0vw auto 2vw auto; /*top, right, bottom, left*/
     padding: 1vw 2vw;
     word-break: normal;
+}
+
+/* サイゆる2026プログラム紹介 */
+#real-event-202603-program-introduction{
+    display: flex;
+    padding: 1.2em 0;
+    row-gap: 0.8em;
+    flex-direction: column;
+}
+#real-event-202603-program-introduction canvas{
+    border-top: #fca2ff 1px solid;
+    border-right: #ada2ff 1px solid;
+    border-bottom: #aea2ff 1px solid;
+    border-left: #d7a2ff 1px solid;
 }
 
 /*コンテンツ*/

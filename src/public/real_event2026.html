@@ -33,6 +33,8 @@
     <script type="text/javascript" src="js/popup.js" defer></script>
     <link rel="stylesheet" href="css/popup.css" />
     <link rel="stylesheet" href="css/style_real_event.css" />
+    <link rel="stylesheet" href="css/style_pdf_swiper.css" />
+    <link rel="stylesheet" href="css/contents_list.css" />
 
     <title>サイゆる2026</title>
   </head>
@@ -100,7 +102,7 @@
                     <div class="article-text">
                         <p>
                             ①Clusterを活用したバーチャル学園祭(<span data-bookmark="bookmark-cluster" class="font-blue">12/20,1/10に開催しました</span>)<br>
-                            ②サークル活動や個人活動の作品・研究を発表するzoom交流会<br>
+                            ②サークル活動や個人活動の作品・研究を発表するzoom交流会(2/8に開催しました)<br>
                             ③デジタルを活用したプログラムで交流するリアルイベント<br>
                             の3本立てで開催します！
                         </p>
@@ -110,6 +112,72 @@
                             みなさんのご参加をお待ちしております！
                         </p>
                     </div>
+                </div>
+                <hr>
+            </div>
+        </section>
+
+        <section class="article-container">
+            <!-- グッズ紹介 -->
+            <div class="article">
+                <h2 class="article-title" data-newcontent="true">【オリジナルグッズ販売予定！！(3月1日~)】</h2>
+                <div>
+                    <div class="article-img">
+                        <img src="img/real_event2026_goods_t_shirt.png" alt="サイゆる2026オリジナルTシャツ" />
+                    </div>
+                    <div class="article-img">
+                        <img src="img/real_event2026_goods_keyholder_square.png" alt="サイゆる2026オリジナルキーホルダー" />
+                    </div>
+                </div>
+                <div class="article-text">
+                    <p>
+                        3月1日からオリジナルグッズを販売予定です🎉<br>
+                        グッズのイラストは全て、在学生がデザインしました！<br>
+                        Tシャツとアクリルキーホルダーの他にも、文房具やタオル、エコバッグなど様々なグッズを販売予定です🙌<br>
+                        グッズの購入ページについては、後日改めてお知らせいたしますので、楽しみにお待ちください😊
+                    </p>
+                </div>
+                <hr>
+            </div>
+        </section>
+
+        <section class="article-container">
+            <!-- プログラム紹介 -->
+            <div class="article">
+                <h2 class="article-title" data-newcontent="true">【リアルイベントプログラム紹介】</h2>
+                <div id="real-event-202603-program-introduction">
+                    <div class="article-img">
+                        <!-- PDFをcanvasスライドで表示するSwiperコンテナ（JSでページを生成） -->
+                        <div class="pdf-swiper">
+                            <div class="swiper-wrapper pdf-slides">
+                                <!-- JSがここに .swiper-slide を追加します -->
+                            </div>
+                            <!-- ナビ・ページネーションは表示しない -->
+                        </div>
+                    </div>
+                    <div class="article-text">
+                        <p>
+                            リアルイベント当日のプログラム内容を紹介します📣<br>
+                            デジタルを活用した企画が盛りだくさんですので、ぜひ当日を楽しみにしていてくださいね😊✨<br>
+                            
+                            参加申し込みもまだ受付中ですので、下記のリンクからお申し込みください！<br><br>
+                            <a class="content-link font-blue" href="https://docs.google.com/forms/d/e/1FAIpQLSd4XG-yl8ntkUCbVcOGqwJbQeO6jgtiBaJIGCDu0zNOycl2OQ/viewform">
+                                <span class="font-bold">リアルイベント参加・オンライン視聴 申込フォーム</span>
+                            </a><br>
+                            ※申込フォームへのアクセスは、大学メールアドレスからお願いいたします。<br>
+                            ※お申し込みはサイバー大学の学生・卒業生・教職員の方に限ります。<br>
+                            ※プログラム内容は一部変更になる可能性があります。ご了承ください。<br><br>
+
+                            みなさまのご参加をお待ちしております！✨                          
+                        </p>
+                        <p>
+                            また、プログラムの一つである、『キャラクターを2人で分担して操作してゴールを目指すゲーム』で使用するゲームは
+                            <a class="content-link" href="game/pixel_box_runner/pixel_box_runner.html" target="_blank">
+                                こちら
+                            </a>から遊ぶことができます！ぜひ事前にプレイしてみてくださいね🎮✨<br>
+                            ※現在開発中のため、リアルイベント当日までにどのように変化していくかも楽しんでいただければ幸いです🙇
+                        </p>
+                </div>
                 </div>
                 <hr>
             </div>
@@ -285,5 +353,22 @@
         </div>
     </div>
 
-  </body>
+    <!-- ページ内 目次 -->
+    <button class="fixed-hamburger" aria-label="コンテンツ一覧" aria-expanded="false" title="コンテンツ一覧">
+      <i class="bi bi-list" aria-hidden="true" style="font-size:22px;"></i>
+    </button>
+
+    <nav id="side-toc" class="side-toc" aria-hidden="true" aria-label="ページ内目次">
+      <h3>コンテンツ一覧</h3>
+      <button class="close-btn" aria-label="閉じる">×</button>
+      <ul></ul>
+    </nav>
+
+    <!-- ページ内 目次 作成用JS読み込み -->
+    <script src="js/contents_list.js" defer></script>
+    <!-- PDFスライドショー用JS読み込み -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js" defer></script>
+    <script src="js/pdf_swiper.js" defer></script>
+
+</body>
 </html>
