@@ -177,6 +177,107 @@
     border-bottom: #aea2ff 1px solid;
     border-left: #d7a2ff 1px solid;
 }
+#real-event-202603-program-introduction>.rulebook-wrapper{
+    background-color: #fffefb;
+}
+
+@media screen and (max-width: 1024px) {
+    #real-event-202603-program-introduction>.rulebook-wrapper>.rulebook{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.8em 2em;
+        padding: 1em;
+    }
+    #real-event-202603-program-introduction>.rulebook-wrapper>.rulebook>.rulebook-link{
+        display: block;
+        align-content: center;
+        background-color: #ffaa00;
+        padding: 0.2em 1em;
+        height: 3.8em;
+        border-top: #ffe9a2 0.1em solid;
+        border-right: #ffe9a2 0.2em double;
+        border-bottom: #ffe9a2 0.2em double;
+        border-left: #ffe9a2 0.1em solid;
+        border-radius: 0.5em;
+    }
+}
+@media screen and (min-width: 1025px) and (max-width: 1440px) {
+    #real-event-202603-program-introduction>.rulebook-wrapper>.rulebook{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8em 1.2em;
+        padding: 1em;
+    }
+    #real-event-202603-program-introduction>.rulebook-wrapper>.rulebook>.rulebook-link{
+        display: block;
+        align-content: center;
+        background-color: #ffaa00;
+        padding: 0.2em 0.8em;
+        height: 4em;
+        border-top: #ffe9a2 0.1em solid;
+        border-right: #ffe9a2 0.2em double;
+        border-bottom: #ffe9a2 0.2em double;
+        border-left: #ffe9a2 0.1em solid;
+        border-radius: 0.5em;
+    }
+}
+@media screen and (min-width: 1441px) and (max-width: 1920px) {
+    #real-event-202603-program-introduction>.rulebook-wrapper>.rulebook{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8em 1.2em;
+        padding: 1em;
+    }    
+    #real-event-202603-program-introduction>.rulebook-wrapper>.rulebook>.rulebook-link{
+        display: block;
+        align-content: center;
+        background-color: #ffaa00;
+        padding: 0.2em 1em;
+        height: 4.2em;
+        border-top: #ffe9a2 0.1em solid;
+        border-right: #ffe9a2 0.2em double;
+        border-bottom: #ffe9a2 0.2em double;
+        border-left: #ffe9a2 0.1em solid;
+        border-radius: 0.5em;
+    }
+}    
+@media screen and (min-width: 1921px) {
+    #real-event-202603-program-introduction>.rulebook-wrapper>.rulebook{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8em 1em;
+        padding: 1em;
+    }
+    #real-event-202603-program-introduction>.rulebook-wrapper>.rulebook>.rulebook-link{
+        display: block;
+        align-content: center;
+        background-color: #ffaa00;
+        padding: 0.2em 0.6em;
+        height: 5em;
+        border-top: #ffe9a2 0.1em solid;
+        border-right: #ffe9a2 0.2em double;
+        border-bottom: #ffe9a2 0.2em double;
+        border-left: #ffe9a2 0.1em solid;
+        border-radius: 0.5em;
+    }
+}
+#real-event-202603-program-introduction>.rulebook-wrapper>.rulebook>.rulebook-link:hover{
+    background-color: #ff9900;
+    border-top: #ffe9a2 0.2em solid;
+    border-right: #ffe9a2 0.3em double;
+    border-bottom: #ffe9a2 0.3em double;
+    border-left: #ffe9a2 0.2em solid;
+}
+#real-event-202603-program-introduction>.rulebook-wrapper>.rulebook>.disabled-link,
+#real-event-202603-program-introduction>.rulebook-wrapper>.rulebook>.disabled-link:hover{
+    color: #888;
+    background-color: #ccc;
+    border-top: #eee 0.1em solid;
+    border-right: #eee 0.2em double;
+    border-bottom: #eee 0.2em double;
+    border-left: #eee 0.1em solid;
+}
+
 
 /*コンテンツ*/
 .content-container{
@@ -288,7 +389,7 @@
     padding: 2vw 2.5vw;
 }
 .cyyuru-x-block>div>.ex-svc-block{
-    border: dashed #f4b637;
+    border: dashed #ffaa00;
 }
 .cyyuru-x-block>div>p{
     font-size: clamp(15px, 1.8vw, 20px);
