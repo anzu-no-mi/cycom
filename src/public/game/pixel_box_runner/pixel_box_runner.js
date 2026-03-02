@@ -16,7 +16,7 @@
 
     // HUD DOM
     const hud      = document.getElementById("hud");
-    const elScore = document.getElementById('hudScore');
+    const elAmmo = document.getElementById('hudAmmo');
     const elTime = document.getElementById('hudTime');
 
     // Result DOM
@@ -24,6 +24,7 @@
     const resultTime   = document.getElementById("resultTime");
     const resultItemDetail = document.getElementById("resultItemDetail");
     const resultEnemyDetail = document.getElementById("resultEnemyDetail");
+    const resultDefeatedEnemyDetail = document.getElementById("resultDefeatedEnemyDetail");
     // ゴール演出完了フラグ
     let finishedEffectEnded = false;
     // カウントダウン表示用（null: 表示なし / 0..3: 表示中）
@@ -63,9 +64,25 @@
         z:0,
         facing:'right'  // 初期は右向き
     };
+    // ===== 弾管理 =====
+    const MAX_BULLETS = 3;  // 同時に存在できる弾の最大数
+    const BULLET_SPEED = 5;  // 弾の速度
+    const BULLET_RANGE = 500;   // 弾の最大射程距離
+    const BULLET_RADIUS = 12;   // 弾のサイズ
+    let bullets = [];
 
     // ===== 敵・アイテム・ゴール =====
+    const SAFE_ZONE_END = 500; // この距離までは敵・アイテム出現禁止
+    const MAX_ENEMY_PER_PLATFORM = 2;   // 1つの足場に出現する敵の最大数
+    const MAX_ITEM_PER_PLATFORM  = 3;   // 1つの足場に出現するアイテムの最大数
+    const MIN_DIST_ENEMY = 90;   // 敵どうしの最小距離
+    const MIN_DIST_ITEM  = 70;   // アイテムどうし
+    const MIN_DIST_MIX   = 80;   // 敵とアイテムの距離
+    const MAX_TRY = 30;          // 無限ループ防止
     let enemies = [];
+    let items = [];
+    let enemyPlatformCount = new Map();
+    let itemPlatformCount  = new Map();
     const ENEMY_COLORS = {
         1: '#3A86FF',
         2: '#FFBE0B',
@@ -76,7 +93,6 @@
         2: 2,
         3: 3
     };
-    let items = [];
     const ITEM_COLORS = {
         1: '#00F5D4',
         2: '#F15BB5',
@@ -91,6 +107,7 @@
 
     // ===== ゲーム状態変数 =====
     let score = 0;
+    let defeatedEnemyCount = { 1:0, 2:0, 3:0 }; // 敵タイプごとの撃破数
     let startTime = null;
     let elapsed = 0;
     let playing = false;
@@ -107,13 +124,15 @@
                 left: 'Numpad4',
                 right: 'Numpad6',
                 jump: 'Space',
-                crouch: 'KeyC'
+                crouch: 'KeyC',
+                shoot: 'KeyB'
             },
             label: {
                 left: '4',
                 right: '6',
                 jump: 'SPACE',
-                crouch: 'c'
+                crouch: 'c',
+                shoot: 'b'
             }
         },
         arrow: {
@@ -121,13 +140,15 @@
                 left: 'ArrowLeft',
                 right: 'ArrowRight',
                 jump: 'Space',
-                crouch: 'KeyC'
+                crouch: 'KeyC',
+                shoot: 'KeyB'
             },
             label: {
                 left: '←',
                 right: '→',
                 jump: 'SPACE',
-                crouch: 'c'
+                crouch: 'c',
+                shoot: 'b'
             }
         },
         wasd: {
@@ -135,13 +156,15 @@
                 left: 'KeyA',
                 right: 'KeyD',
                 jump: 'Space',
-                crouch: 'KeyS'
+                crouch: 'KeyS',
+                shoot: 'KeyF'
             },
             label: {
                 left: 'a',
                 right: 'd',
                 jump: 'SPACE',
-                crouch: 's'
+                crouch: 's',
+                shoot: 'f'
             }
         }
     };
@@ -229,7 +252,8 @@
         left: false,
         right: false,
         jump: false,
-        crouch: false
+        crouch: false,
+        shoot: false
     };
     let jumpPressed = false;
     window.addEventListener('keydown', e => {
@@ -244,6 +268,10 @@
         // ジャンプ・しゃがみ
         if (e.code === currentKeySet.input.jump)   keys.jump = true;
         if (e.code === currentKeySet.input.crouch) keys.crouch = true;
+
+        // 射撃
+        if (e.code === currentKeySet.input.shoot)  keys.shoot = true;
+
         // デバッグ用
         console.log('keydown:', e.code, keys);
     });
@@ -252,13 +280,22 @@
         if (e.code === currentKeySet.input.right) keys.right = false;
         if (e.code === currentKeySet.input.jump) { keys.jump = false; jumpPressed = false; } // ← 着地後に再ジャンプ可能にする
         if (e.code === currentKeySet.input.crouch) keys.crouch = false;
+        if (e.code === currentKeySet.input.shoot) keys.shoot = false;
         // デバッグ用
         // console.log('keyup:', e.code, keys);
     });
 
     // ===== ゲームロジック =====
     // 矩形当たり判定
-    function rectIntersect(a,b){ return !(a.x+a.w<b.x||a.x>b.x+b.w||a.y+a.h<b.y||a.y>b.y+b.h); }
+    function rectIntersect(a, b) { return !(a.x + a.w < b.x || a.x > b.x + b.w || a.y + a.h < b.y || a.y > b.y + b.h); }
+    // 円と矩形の当たり判定
+    function circleRectHit(cx, cy, r, rect){
+        const nearestX = Math.max(rect.x, Math.min(cx, rect.x + rect.w));
+        const nearestY = Math.max(rect.y, Math.min(cy, rect.y + rect.h));
+        const dx = cx - nearestX;
+        const dy = cy - nearestY;
+        return (dx*dx + dy*dy) < r*r;
+    }
     // 値の範囲制限
     function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
 
@@ -274,30 +311,106 @@
         // 敵生成
         const enemyCount = 7;
         for(let i=0;i<enemyCount;i++){
-            let p = platforms[1 + Math.floor(rand()*(platforms.length-1))];
-            const type = 1 + Math.floor(rand()*3);
-            const speed = [1.2,0.9,1.6][type-1];
-            const damage = ENEMY_DAMAGE[type];
-            const w = 32, h = 32;
-            const x = clamp(p.x + 10 + rand()*(p.w - w - 20), p.x+10, p.x+p.w-w-10);
-            const y = p.y - h;
-            const margin = 40;
-            const ax = Math.max(p.x, x - margin);
-            const bx = Math.min(p.x + p.w - w, x + margin);
-            enemies.push({category: "enemy",x,y,w,h,ax,bx,v:speed,damage,type});
+            let placed = false;
+
+            for (let t = 0; t < MAX_TRY && !placed; t++) {  // 無限ループ防止のため最大試行回数を設定
+                // 足場インデックス取得
+                const pi = 1 + Math.floor(rand()*(platforms.length-1));
+                let p = platforms[pi];
+
+                // 🔹 足場ごとの上限チェック
+                const currentCount = enemyPlatformCount.get(pi) || 0;
+                if (currentCount >= MAX_ENEMY_PER_PLATFORM) continue;   // 上限に達しているならリトライ
+
+                const type = 1 + Math.floor(rand()*3);
+                const speed = [1.2,0.9,1.6][type-1];
+                const damage = ENEMY_DAMAGE[type];
+                const w = 32, h = 32;
+
+                const x = clamp(p.x + 10 + rand()*(p.w - w - 20), p.x+10, p.x+p.w-w-10);
+                const y = p.y - h;
+
+                // 🔹 安全エリア禁止
+                if (x < SAFE_ZONE_END) continue;    // 安全エリア内ならリトライ
+
+                if (    // 既存の敵＆アイテムと距離チェック
+                    !isTooClose(x, y, enemies, MIN_DIST_ENEMY) &&
+                    !isTooClose(x, y, items,   MIN_DIST_MIX)
+                ) {
+                    const margin = 40;
+                    const ax = Math.max(p.x, x - margin);
+                    const bx = Math.min(p.x + p.w - w, x + margin);
+                    enemies.push({
+                        category:"enemy",
+                        x,y,w,h,ax,bx,
+                        v:speed,
+                        damage,
+                        type,
+                        hit:0,  // プレイヤーにダメージを与えた回数
+                        alive:true, // 敵生存フラグ
+                    });
+
+                    // 🔹 カウント更新
+                    enemyPlatformCount.set(pi, currentCount + 1);
+                    placed = true;
+                }
+            }
         }
 
         // アイテム生成
         const itemCount = 9;
         for(let i=0;i<itemCount;i++){
-            let p = platforms[1 + Math.floor(rand()*(platforms.length-1))];
-            const type = 1 + Math.floor(rand()*3);
-            const value = ITEM_SCORE[type];
-            const x = clamp(p.x + 10 + rand()*(p.w - 20), p.x+10, p.x+p.w-10);
-            const y = p.y - 18 - rand()*30;
-            items.push({category: "item",x,y,collected:false,value,type});
+            let placed = false;
+
+            for (let t = 0; t < MAX_TRY && !placed; t++) {  // 無限ループ防止のため最大試行回数を設定
+                // 足場インデックス取得
+                const pi = 1 + Math.floor(rand()*(platforms.length-1));
+                let p = platforms[pi];
+
+                // 🔹 足場ごとの上限チェック
+                const currentCount = itemPlatformCount.get(pi) || 0;
+                if (currentCount >= MAX_ITEM_PER_PLATFORM) continue;    // 上限に達しているならリトライ
+
+                const type = 1 + Math.floor(rand()*3);
+                const value = ITEM_SCORE[type];
+
+                const x = clamp(p.x + 10 + rand()*(p.w - 20), p.x+10, p.x+p.w-10);
+                const y = p.y - 18 - rand()*30;
+
+                // 🔹 安全エリア禁止
+                if (x < SAFE_ZONE_END) continue;    // 安全エリア内ならリトライ
+
+                if (    // 既存の敵＆アイテムと距離チェック
+                    !isTooClose(x, y, items,   MIN_DIST_ITEM) &&
+                    !isTooClose(x, y, enemies, MIN_DIST_MIX)
+                ) {
+                    items.push({
+                        category:"item",
+                        x,y,
+                        collected:false,
+                        value,
+                        type
+                    });
+
+                    // 🔹 カウント更新
+                    itemPlatformCount.set(pi, currentCount + 1);
+                    placed = true;
+                }
+            }
         }
     }
+    // 近すぎる位置かどうかチェック
+    function isTooClose(x, y, list, minDist) {
+        for (let o of list) {
+            const dx = o.x - x;
+            const dy = o.y - y;
+            if (Math.sqrt(dx*dx + dy*dy) < minDist) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     //===========================================================
     // メイン更新処理
@@ -316,11 +429,27 @@
             const right = keys.right;
             const jump = keys.jump;
             const crouch = keys.crouch;
+            const shoot = keys.shoot;
             player.crouch = crouch;
 
             // しゃがみ中は左右入力を無視する（移動不可にする）
             const doMoveLeft = crouch ? false : left;
             const doMoveRight = crouch ? false : right;
+
+            //==========================
+            // 🔹 射撃処理
+            //==========================
+            if (keys.shoot && bullets.length < MAX_BULLETS) {
+                keys.shoot = false; // 押しっぱなし防止（単発）
+                bullets.push({
+                    x: player.x + player.w/2,
+                    y: player.y + player.h/2,
+                    vx: player.facing === 'right' ? BULLET_SPEED : -BULLET_SPEED,
+                    startX: player.x,
+                    radius: BULLET_RADIUS,
+                    alive: true
+                });
+            }
 
             // =====================
             // 🔹 移動制御
@@ -548,10 +677,36 @@
             }
 
             //==========================
-            // 🔹 敵・アイテム・ゴール判定
+            // 🔹 敵・アイテム・弾・ゴール判定
             //==========================
             // --- 敵の移動更新 ---
             for(let e of enemies){ e.x += e.v; if(e.x < e.ax){ e.x=e.ax; e.v*=-1 } if(e.x>e.bx){ e.x=e.bx; e.v*=-1 } }
+
+            //=== 弾更新 ===
+            for (let b of bullets) {
+                b.x += b.vx;
+                // 距離で消滅
+                if (Math.abs(b.x - b.startX) > BULLET_RANGE) {
+                    b.alive = false;
+                }
+                // 敵との当たり判定
+                for (let e of enemies) {
+                    if (!e.alive) continue;
+                    if (circleRectHit(b.x, b.y, b.radius, {x:e.x, y:e.y, w:e.w, h:e.h})) {
+                        e.alive = false;
+                        b.alive = false;
+                        score += ENEMY_DAMAGE[e.type] * 2;  // ★撃破スコア
+                        defeatedEnemyCount[e.type]++;    // 撃破数カウント
+                    }
+                }
+            }
+            // 消えた弾・敵を削除
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                if (!bullets[i].alive) bullets.splice(i,1);
+            }
+            for (let i = enemies.length - 1; i >= 0; i--) {
+                if (!enemies[i].alive) enemies.splice(i,1);
+            }
 
             // --- 敵当たり判定（プレイヤーと敵） ---
             const now = performance.now();
@@ -610,8 +765,8 @@
             }
 
             // --- スコア・時間表示更新 ---
-            elScore.textContent = `Score: ${score}`;
-            elTime.textContent = `Time: ${Math.max(0, Math.floor(TIME_LIMIT - elapsed))}s`;
+            updateAmmoDisplay();
+            elTime.textContent = `残り秒数: ${Math.max(0, Math.floor(TIME_LIMIT - elapsed))}s`;
         }
     }
 
@@ -650,6 +805,22 @@
             ctx.fillRect(p.x - cameraX, p.y, 4, 4);
         }
         ctx.globalAlpha = 1;
+    }
+    // 残弾数表示更新関数
+    function updateAmmoDisplay() {
+        const remaining = MAX_BULLETS - bullets.length;
+
+        let display = "残弾数: ";
+
+        for (let i = 0; i < MAX_BULLETS; i++) {
+            if (i < remaining) {
+                display += "●";
+            } else {
+                display += "－";
+            }
+        }
+
+        hudAmmo.textContent = display;
     }
 
     //===========================================================
@@ -706,6 +877,33 @@
             ctx.fillStyle='#111';
             ctx.fillRect(x+6,y+6,4,4);
             ctx.fillRect(x+e.w-12,y+6,4,4);
+        }
+
+        // 弾描画
+        ctx.fillStyle = '#ff4444';
+        for (let b of bullets) {
+            const x = b.x - cameraX;
+            const y = b.y;
+            const r = b.radius;
+
+            // ① グラデ（コントラスト弱め）
+            const grad = ctx.createRadialGradient(
+                x, y, r * 0.1,
+                x, y, r
+            );
+            grad.addColorStop(0, "#E8FFFF");   // 中心部
+            grad.addColorStop(0.6, "#66D9FF");
+            grad.addColorStop(1, "#00AACC");   // 外側
+
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fill();
+
+            // ② 外周リング
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "#007A99";
+            ctx.stroke();
         }
 
         const px = player.x - cameraX, py = player.y; ctx.save();
@@ -858,9 +1056,11 @@
 
         // ===== 入力状態初期化 =====
         jumpPressed = false;
+        bullets = [];
 
         // ===== ゲーム進行状態 =====
         score = 0;
+        defeatedEnemyCount = { 1:0, 2:0, 3:0 };
         elapsed = 0;
         startTime = null;
         goal.reached = false;
@@ -874,10 +1074,16 @@
         // ===== エンティティ =====
         enemies = [];
         items = [];
+        enemyPlatformCount.clear();
+        itemPlatformCount.clear();
 
         // ===== HUD 表示 =====
-        elScore.textContent = "Score: -";
-        elTime.textContent  = "Time: -";
+        elAmmo.textContent = "残弾数: -";
+        elTime.textContent  = "残り秒数: -";
+
+        // backToTitleBtn 無効化
+        backToTitleBtn.disabled = true;
+        backToTitleBtn.classList.add('toTitleBtnDisabled');
 
         // ===== カウントダウン =====
         countdown = null;
@@ -896,6 +1102,7 @@
     async function showResultScreen() {
         resultItemDetail.innerHTML = "";
         resultEnemyDetail.innerHTML = "";
+        resultDefeatedEnemyDetail.innerHTML = "";
         resultScreen.style.display = "grid";
         let displayScore = 0;
         resultScore.textContent = displayScore;
@@ -905,6 +1112,7 @@
         for (const type of [1,2,3]) {
             const count = itemStats[type];
             const unitScore = ITEM_SCORE[type];
+            if (count === 0) continue;  // 取得数0ならスキップ(表示しない)
 
             const row = document.createElement("div");
             row.className = "resultRow";
@@ -930,6 +1138,7 @@
         for (const type of [1,2,3]) {
             const count = enemyStats[type];
             const damage = ENEMY_DAMAGE[type];
+            if (count === 0) continue;  // ヒット数0ならスキップ(表示しない)
 
             const row = document.createElement("div");
             row.className = "resultRow";
@@ -950,7 +1159,33 @@
                 resultScore.textContent = displayScore;
             }
         }
-        // ========= 3. 残り時間加算 =========
+        // ========= 3. 敵撃破ボーナス =========
+        const defeatedStats = getDefeatedEnemyStats();
+        for (const type of [1,2,3]) {
+            const count = defeatedStats[type];
+            const bonus = ENEMY_DAMAGE[type] * 2; // 撃破時に加算した値と揃える
+            if (count === 0) continue;  // 撃破数0ならスキップ(表示しない)
+
+            const row = document.createElement("div");
+            row.className = "resultRow";
+
+            const icon = document.createElement("div");
+            icon.className = "enemy";
+            icon.style.background = ENEMY_COLORS[type];
+
+            const text = document.createElement("span");
+            text.textContent = `(+${bonus}) × ${count}`;
+
+            row.append(icon, text);
+            resultDefeatedEnemyDetail.appendChild(row);
+
+            for (let i = 0; i < count; i++) {
+                await wait(150);
+                displayScore += bonus;
+                resultScore.textContent = displayScore;
+            }
+        }
+        // ========= 4. 残り時間加算 =========
         const timeRemaining = Math.max(0, Math.floor(TIME_LIMIT - elapsed));
         resultTime.textContent = timeRemaining;
 
@@ -960,6 +1195,9 @@
             resultScore.textContent = displayScore;
         }
         gameState = "finished";
+        backToTitleBtn.disabled = false;    // ゲームトップへ戻るボタンを有効化
+        backToTitleBtn.classList.remove('toTitleBtnDisabled');
+        
     }
     // (回数集計)
     function getItemStats(){
@@ -976,6 +1214,10 @@
             3: enemies.reduce((s, e) => s + (e.type === 3 ? (e.hit || 0) : 0), 0)
         };
     }
+    function getDefeatedEnemyStats(){
+        return defeatedEnemyCount;
+    }
+
     // ===== 指定ミリ秒待機するPromise =====
     function wait(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -1011,10 +1253,12 @@
         showScreen("title");
     };
     gameOverToTitleBtn.onclick = () => {
-        // ===== 状態フラグを戻す =====
-        gameState = "title";
-        resetGameState();
-        // ===== タイトル画面を表示 =====
-        showScreen("title");
+        if (gameState === "finished") {
+            // ===== 状態フラグを戻す =====
+            gameState = "title";
+            resetGameState();
+            // ===== タイトル画面を表示 =====
+            showScreen("title");
+        }
     };
 })();
