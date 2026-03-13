@@ -36,8 +36,7 @@
     const gameOverToTitleBtn = document.getElementById('gameOverToTitleBtn');
 
     // ===== ゲームパラメータ =====
-    const LEVEL_WIDTH = 4000;
-    const GRAVITY = 0.8;
+    const LEVEL_WIDTH = 5000;
     const TIME_LIMIT = 120;
 
     // ===== ステージ構成 =====
@@ -45,14 +44,20 @@
         {x:0,y:380,w:LEVEL_WIDTH,h:70}, // 地面
         {x:300,y:310,w:200,h:16,depth:0}, // 足場群(スタート位置に一番近い)
         {x:650,y:260,w:200,h:16,depth:0}, 
-        {x:1050,y:320,w:180,h:16,depth:0},
+        {x:1050,y:200,w:220,h:16,depth:0},
         {x:1400,y:270,w:250,h:16,depth:0},
+        {x:1800,y:150,w:300,h:16,depth:0},
         {x:1850,y:340,w:160,h:16,depth:0},
         {x:2250,y:300,w:220,h:16,depth:0},
         {x:2700,y:250,w:200,h:16,depth:0},
+        {x:3000,y:100,w:120,h:16,depth:0},
         {x:3050,y:320,w:180,h:16,depth:0},
-        {x:3450,y:300,w:100,h:16,depth:0} // 足場群(ゴール位置に一番近い)
-    ];
+        {x:3400,y:300,w:100,h:16,depth:0},
+        {x:3600,y:150,w:260,h:16,depth:0},
+        {x:3950,y:270,w:120,h:16,depth:0},
+        {x:4100,y:130,w:100,h:16,depth:0},
+        {x:4300,y:340,w:180,h:16,depth:0}   // 足場群(ゴール位置に一番近い) 
+    ]; 
 
     // ===== プレイヤー =====
     const player = {
@@ -73,10 +78,13 @@
 
     // ===== 敵・アイテム・ゴール =====
     const SAFE_ZONE_END = 500; // この距離までは敵・アイテム出現禁止
+    const ENEMY_COUNT = 12;
+    const ITEM_COUNT = 10;
+    const MAX_ENEMY_PER_GROUND = 5; // 地面に出現する敵の最大数
     const MAX_ENEMY_PER_PLATFORM = 2;   // 1つの足場に出現する敵の最大数
     const MAX_ITEM_PER_PLATFORM  = 3;   // 1つの足場に出現するアイテムの最大数
-    const MIN_DIST_ENEMY = 90;   // 敵どうしの最小距離
-    const MIN_DIST_ITEM  = 70;   // アイテムどうし
+    const MIN_DIST_ENEMY = 110;   // 敵どうしの最小距離
+    const MIN_DIST_ITEM  = 100;   // アイテムどうし
     const MIN_DIST_MIX   = 80;   // 敵とアイテムの距離
     const MAX_TRY = 30;          // 無限ループ防止
     let enemies = [];
@@ -103,7 +111,7 @@
         2: 3,
         3: 5
     };
-    const goal = {x:3800,y:50,w:80,h:330, reached:false, anim:0 };
+    const goal = {x:LEVEL_WIDTH-200,y:50,w:80,h:330, reached:false, anim:0 };
 
     // ===== ゲーム状態変数 =====
     let score = 0;
@@ -273,7 +281,7 @@
         if (e.code === currentKeySet.input.shoot)  keys.shoot = true;
 
         // デバッグ用
-        console.log('keydown:', e.code, keys);
+        // console.log('keydown:', e.code, keys);
     });
     window.addEventListener('keyup', e => {
         if (e.code === currentKeySet.input.left)  keys.left = false;
@@ -299,8 +307,8 @@
     // 値の範囲制限
     function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
 
-    // 敵・アイテム生成
-    function generateEntities(){
+    // ===== 敵・アイテム生成 =====
+    function generateEntities(enemyCount, itemCount){
         enemies = [];
         items = [];
 
@@ -308,15 +316,17 @@
         const dateSeed = getJSTDateString(); // 例: "2026-01-18"
         const rand = createSeededRandom(dateSeed);
 
-        // 敵生成
-        const enemyCount = 7;
+        // --- 敵生成 ---
         for(let i=0;i<enemyCount;i++){
             let placed = false;
 
             for (let t = 0; t < MAX_TRY && !placed; t++) {  // 無限ループ防止のため最大試行回数を設定
-                // 足場インデックス取得
-                const pi = 1 + Math.floor(rand()*(platforms.length-1));
+                // 地面＆足場インデックス取得
+                const pi = Math.floor(rand()*(platforms.length));
                 let p = platforms[pi];
+
+                // 🔹 地面だけ上限を別設定
+                const limit = (pi === 0) ? MAX_ENEMY_PER_GROUND : MAX_ENEMY_PER_PLATFORM;
 
                 // 🔹 足場ごとの上限チェック
                 const currentCount = enemyPlatformCount.get(pi) || 0;
@@ -337,7 +347,10 @@
                     !isTooClose(x, y, enemies, MIN_DIST_ENEMY) &&
                     !isTooClose(x, y, items,   MIN_DIST_MIX)
                 ) {
-                    const margin = 40;
+
+                    // 敵の移動範囲(地面:200, 足場:40)
+                    const margin = (pi === 0) ? 200 : 40;
+
                     const ax = Math.max(p.x, x - margin);
                     const bx = Math.min(p.x + p.w - w, x + margin);
                     enemies.push({
@@ -358,7 +371,6 @@
         }
 
         // アイテム生成
-        const itemCount = 9;
         for(let i=0;i<itemCount;i++){
             let placed = false;
 
@@ -558,7 +570,10 @@
                 const platformBottom = p.y + p.h;
                 const playerTop = player.y;
                 const playerBottom = player.y + player.h;
-                console.log('platforms[0]:', platforms[0], 'playerTop:', playerTop, 'playerBottom:', playerBottom);
+
+                // デバッグ用
+                // console.log('platforms[0]:', platforms[0], 'playerTop:', playerTop, 'playerBottom:', playerBottom);
+
                 if (playerBottom == platforms[0].y && platformBottom >= playerTop) {
                     // 地面に近いプラットフォームの特別処理
                     // プレイヤーが地面に居る、かつプラットフォームの下部がプレイヤーの背丈より下にある場合 → 衝突を無視（通過できる）
@@ -633,7 +648,9 @@
                 } else {
                     // --- 横から衝突した場合（側面衝突や深い貫通など） ---
 
-                    console.log('platforms[0]:', platforms[0], 'playerTop:', playerTop, 'playerBottom:', playerBottom, 'platformBottom:', platformBottom);
+                    // デバッグ用
+                    // console.log('platforms[0]:', platforms[0], 'playerTop:', playerTop, 'playerBottom:', playerBottom, 'platformBottom:', platformBottom);
+
                     if (platformTop >= playerTop) {
                         // 地面に近いプラットフォームの特別処理
                         // プレイヤーが地面に居る、かつプラットフォームの上部がプレイヤーの背丈より下にある場合 → 衝突を無視（通過できる）
@@ -1020,7 +1037,10 @@
         let count = 3;
         countdown = count;
         const interval = setInterval(() => {
-            console.log("Countdown:", count);
+
+            // デバッグ用
+            // console.log("Countdown:", count);
+
             count--;
             countdown = Math.max(0, count + 0); // 0..3 を保持（負になったら 0 表示後解除）
             if (count < 0) {
@@ -1038,7 +1058,7 @@
         resetGameState();
         playing = true;
         // エンティティ生成
-        generateEntities();
+        generateEntities(ENEMY_COUNT, ITEM_COUNT);
         // ✅ プレイ前カウントダウン（例：3 → 2 → 1 → START）
         startCountdown();
     }
@@ -1107,13 +1127,23 @@
         let displayScore = 0;
         resultScore.textContent = displayScore;
 
-        // ========= 1. アイテム加算 =========
+        // ========= 1. 残り時間加算 =========
+        const timeRemaining = Math.max(0, Math.floor(TIME_LIMIT - elapsed));
+        resultTime.textContent = timeRemaining;
+
+        for (let i = 0; i < timeRemaining; i++) {
+            await wait(10);
+            displayScore++;
+            resultScore.textContent = displayScore;
+        }
+        // ========= 2. アイテム加算 =========
         const itemStats = getItemStats();
         for (const type of [1,2,3]) {
             const count = itemStats[type];
             const unitScore = ITEM_SCORE[type];
-            if (count === 0) continue;  // 取得数0ならスキップ(表示しない)
-
+            if (count === 0) {
+                await wait(250);
+            }
             const row = document.createElement("div");
             row.className = "resultRow";
 
@@ -1128,17 +1158,19 @@
             resultItemDetail.appendChild(row);
 
             for (let i = 0; i < itemStats[type]; i++) {
-                await wait(150);
+                await wait(250);
                 displayScore += unitScore;
                 resultScore.textContent = displayScore;
             }
         }
-        // ========= 2. 敵ダメージ減算 =========
+        // ========= 3. 敵ダメージ減算 =========
         const enemyStats = getEnemyStats();
         for (const type of [1,2,3]) {
             const count = enemyStats[type];
             const damage = ENEMY_DAMAGE[type];
-            if (count === 0) continue;  // ヒット数0ならスキップ(表示しない)
+            if (count === 0) {
+                await wait(250);
+            }
 
             const row = document.createElement("div");
             row.className = "resultRow";
@@ -1154,17 +1186,19 @@
             resultEnemyDetail.appendChild(row);
 
             for (let i = 0; i < enemyStats[type]; i++) {
-                await wait(150);
+                await wait(250);
                 displayScore = Math.max(0, displayScore - damage);
                 resultScore.textContent = displayScore;
             }
         }
-        // ========= 3. 敵撃破ボーナス =========
+        // ========= 4. 敵撃破ボーナス =========
         const defeatedStats = getDefeatedEnemyStats();
         for (const type of [1,2,3]) {
             const count = defeatedStats[type];
             const bonus = ENEMY_DAMAGE[type] * 2; // 撃破時に加算した値と揃える
-            if (count === 0) continue;  // 撃破数0ならスキップ(表示しない)
+            if (count === 0) {
+                await wait(250);
+            }
 
             const row = document.createElement("div");
             row.className = "resultRow";
@@ -1180,19 +1214,10 @@
             resultDefeatedEnemyDetail.appendChild(row);
 
             for (let i = 0; i < count; i++) {
-                await wait(150);
+                await wait(250);
                 displayScore += bonus;
                 resultScore.textContent = displayScore;
             }
-        }
-        // ========= 4. 残り時間加算 =========
-        const timeRemaining = Math.max(0, Math.floor(TIME_LIMIT - elapsed));
-        resultTime.textContent = timeRemaining;
-
-        for (let i = 0; i < timeRemaining; i++) {
-            await wait(50);
-            displayScore++;
-            resultScore.textContent = displayScore;
         }
         gameState = "finished";
         backToTitleBtn.disabled = false;    // ゲームトップへ戻るボタンを有効化
